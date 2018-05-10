@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="nlg-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <paper-button>[[message]]!</paper-button>
+  </template>
+  <script>
+    class NLGApp extends Polymer.Element {
+      static get is() {
+        return 'nlg-app';
+      }
+      static get properties() {
+        return {
+          message: {
+            type: String,
+            value: 'Nuxeo Logo Generator'
+          }
+        };
+      }
+    }
+    window.customElements.define(NLGApp.is, NLGApp);
+  </script>
+</dom-module>
