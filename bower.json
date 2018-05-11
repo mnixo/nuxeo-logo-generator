@@ -2,8 +2,13 @@
   "name": "nuxeo-logo-generator",
   "main": "index.html",
   "dependencies": {
+    "neon-animation": "PolymerElements/neon-animation#^2.2.1",
+    "paper-button": "PolymerElements/paper-button#^2.0.0",
+    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^2.1.0",
+    "paper-listbox": "PolymerElements/paper-listbox#^2.1.1",
+    "paper-item": "PolymerElements/paper-item#^2.1.1",
     "polymer": "Polymer/polymer#^2.5.0",
-    "paper-button": "PolymerElements/paper-button#^2.0.0"
+    "svg-wrapper": "^1.1.12"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
