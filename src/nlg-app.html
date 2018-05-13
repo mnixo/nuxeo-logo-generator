@@ -2,8 +2,9 @@
 <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/svg-wrapper/svg-wrapper.html">
 
@@ -19,6 +20,19 @@
         justify-content: center;
         margin: 1em 0;
       }
+      .dimensions {
+        display: flex;
+        justify-content: center;
+      }
+      .dimensions > paper-input {
+        width: 5em;
+        text-align: center;
+      }
+      .dimensions > span {
+        font-family: 'Roboto', sans-serif;
+        margin: 1em 1em 0 1em;
+        align-self: center;
+      }
     </style>
     <paper-dropdown-menu label="Logo Template" on-iron-select="_itemSelected">
       <paper-listbox slot="dropdown-content" selected="0">
@@ -30,6 +44,15 @@
         <paper-item id="NUXEO-X.svg">NUXEO-X.svg</paper-item>
       </paper-listbox>
     </paper-dropdown-menu>
+    <div class="dimensions">
+      <paper-input label="Width" value="{{width}}">
+        <div slot="suffix">px</div>
+      </paper-input>
+      <span>x</span>
+      <paper-input label="Height" value="{{height}}">
+        <div slot="suffix">px</div>
+      </paper-input>
+    </div>
     <svg-wrapper id="svgWrapper" svg-data="[[content]]" pre-render></svg-wrapper>
     <a id="downloadLink" hidden></a>
     <paper-button raised on-click="_download">Download</paper-button>
@@ -43,8 +66,20 @@
 
       static get properties() {
         return {
-          content: {
-            type: String,
+          content: String,
+          width: {
+            type: Number,
+            value: 100,
+            observer: '_computeContent'
+          },
+          height: {
+            type: Number,
+            value: 100,
+            observer: '_computeContent'
+          },
+          template: {
+            type: Object,
+            observer: '_computeContent'
           },
           templates: {
             type: Object,
@@ -95,10 +130,14 @@
         super.ready();
       }
 
-      _itemSelected(e) {
-        const template = this.templates[e.detail.item.id];
+      _computeContent() {
+        if (!this.template) {
+          return this.content = '';
+        }
+        const width = this.width ? this.width : 0;
+        const height = this.height ? this.height : 0;
         this.content = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="${template.defaultWidth}px" height="${template.defaultHeight}px" viewBox="${template.viewBox}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="${width}px" height="${height}px" viewBox="${this.template.viewBox}">
             <defs>
               <style>
                 .background {
@@ -116,9 +155,15 @@
               </style>
             </defs>
             <rect class="background" width="100%" height="100%"/>
-            ${template.geometry}
+            ${this.template.geometry}
           </svg>
         `;
+      }
+
+      _itemSelected(e) {
+        this.template = this.templates[e.detail.item.id];
+        this.width = this.template.defaultWidth;
+        this.height = this.template.defaultHeight;
       }
 
       _download() {
