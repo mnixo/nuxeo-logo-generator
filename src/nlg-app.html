@@ -1,3 +1,5 @@
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/neon-animation/web-animations.html">
 <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
@@ -61,11 +63,13 @@
       </paper-listbox>
     </paper-dropdown-menu>
     <div class="dimensions">
-      <paper-input label="Height" value="{{height}}">
+      <paper-input label="Height" value="{{height}}" type="Number" allowed-pattern="[0-9]">
+        <iron-icon slot="prefix" icon="unfold-more"></iron-icon>
         <div slot="suffix">px</div>
       </paper-input>
       <span>x</span>
-      <paper-input label="Width" value="{{width}}">
+      <paper-input label="Width" value="{{width}}" type="Number" allowed-pattern="[0-9]">
+        <iron-icon slot="prefix" icon="code"></iron-icon>
         <div slot="suffix">px</div>
       </paper-input>
     </div>
@@ -74,21 +78,24 @@
         <div slot="prefix">#</div>
       </paper-input>
       <span></span>
-      <paper-input label="Primary Opacity" value="{{primaryOpacity}}"></paper-input>
+      <paper-input label="Primary Opacity" value="{{primaryOpacity}}" type="Number" max="1" min="0" step="0.1">
+      </paper-input>
     </div>
     <div class="color">
       <paper-input label="Secondary Fill" value="{{secondaryFill}}">
         <div slot="prefix">#</div>
       </paper-input>
       <span></span>
-      <paper-input label="Secondary Opacity" value="{{secondaryOpacity}}"></paper-input>
+      <paper-input label="Secondary Opacity" value="{{secondaryOpacity}}" type="Number" max="1" min="0" step="0.1">
+      </paper-input>
     </div>
     <div class="color">
       <paper-input label="Background Fill" value="{{backgroundFill}}">
         <div slot="prefix">#</div>
       </paper-input>
       <span></span>
-      <paper-input label="Background Opacity" value="{{backgroundOpacity}}"></paper-input>
+      <paper-input label="Background Opacity" value="{{backgroundOpacity}}" type="Number" max="1" min="0" step="0.1">
+      </paper-input>
     </div>
     <paper-button raised on-click="_download">Download</paper-button>
     <svg-wrapper class="displayed" svg-data="[[content]]"></svg-wrapper>
