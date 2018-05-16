@@ -83,11 +83,17 @@
       </paper-input>
     </div>
 
-    <nlg-color-picker label="Primary" fill="{{primaryFill}}" opacity="{{primaryOpacity}}"></nlg-color-picker>
+    <template is="dom-if" if="[[template.primaryFill]]">
+      <nlg-color-picker label="Primary" fill="{{primaryFill}}" opacity="{{primaryOpacity}}"></nlg-color-picker>
+    </template>
 
-    <nlg-color-picker label="Secondary" fill="{{secondaryFill}}" opacity="{{secondaryOpacity}}"></nlg-color-picker>
+    <template is="dom-if" if="[[template.secondaryFill]]">
+      <nlg-color-picker label="Secondary" fill="{{secondaryFill}}" opacity="{{secondaryOpacity}}"></nlg-color-picker>
+    </template>
 
-    <nlg-color-picker label="Background" fill="{{backgroundFill}}" opacity="{{backgroundOpacity}}"></nlg-color-picker>
+    <template is="dom-if" if="[[template.backgroundFill]]">
+      <nlg-color-picker label="Background" fill="{{backgroundFill}}" opacity="{{backgroundOpacity}}"></nlg-color-picker>
+    </template>
 
     <paper-button raised on-click="_download">Download</paper-button>
 
