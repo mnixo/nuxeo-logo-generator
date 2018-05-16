@@ -9,6 +9,7 @@
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/svg-wrapper/svg-wrapper.html">
+<link rel="import" href="nlg-color-picker.html">
 <link rel="import" href="nlg-colors.html">
 <link rel="import" href="nlg-templates.html">
 
@@ -49,32 +50,19 @@
         margin: 1em 1em 0 1em;
         align-self: center;
       }
+      nlg-color-picker {
+        display: flex;
+      }
       paper-button {
         background-color: #fff;
         margin-top: 1em;
       }
-      div.color-preview {
-        width: 1em;
-        height: 1em;
-        border-radius: 0.2em;
-        border: solid black 1px;
-        margin-right: 0.5em;
-      }
     </style>
+
     <paper-dropdown-menu label="Logo Template" on-iron-select="_itemSelected">
       <paper-listbox slot="dropdown-content" selected="0">
         <template is="dom-repeat" items="[[_getTemplates()]]">
           <paper-item id="[[item.id]]">[[item.id]]</paper-item>
-        </template>
-      </paper-listbox>
-    </paper-dropdown-menu>
-    <paper-dropdown-menu label="Color">
-      <paper-listbox slot="dropdown-content" selected="0">
-        <template is="dom-repeat" items="[[_getColors()]]">
-          <paper-item>
-            <div class="color-preview" style$="background-color:[[item.value]];"></div>
-            [[item.id]]
-          </paper-item>
         </template>
       </paper-listbox>
     </paper-dropdown-menu>
@@ -89,24 +77,13 @@
         <div slot="suffix">px</div>
       </paper-input>
     </div>
-    <div class="color">
-      <paper-input label="Primary Fill" value="{{primaryFill}}"></paper-input>
-      <span></span>
-      <paper-input label="Primary Opacity" value="{{primaryOpacity}}" type="Number" max="1" min="0" step="0.1">
-      </paper-input>
-    </div>
-    <div class="color">
-      <paper-input label="Secondary Fill" value="{{secondaryFill}}"></paper-input>
-      <span></span>
-      <paper-input label="Secondary Opacity" value="{{secondaryOpacity}}" type="Number" max="1" min="0" step="0.1">
-      </paper-input>
-    </div>
-    <div class="color">
-      <paper-input label="Background Fill" value="{{backgroundFill}}"></paper-input>
-      <span></span>
-      <paper-input label="Background Opacity" value="{{backgroundOpacity}}" type="Number" max="1" min="0" step="0.1">
-      </paper-input>
-    </div>
+
+    <nlg-color-picker label="Primary" fill="{{primaryFill}}" opacity="{{primaryOpacity}}"></nlg-color-picker>
+
+    <nlg-color-picker label="Secondary" fill="{{secondaryFill}}" opacity="{{secondaryOpacity}}"></nlg-color-picker>
+
+    <nlg-color-picker label="Background" fill="{{backgroundFill}}" opacity="{{backgroundOpacity}}"></nlg-color-picker>
+
     <paper-button raised on-click="_download">Download</paper-button>
     <svg-wrapper class="displayed" svg-data="[[content]]"></svg-wrapper>
     <svg-wrapper class="hidden" id="svgWrapper" svg-data="[[content]]" pre-render></svg-wrapper>
@@ -114,6 +91,7 @@
 
     <nlg-colors id="colors"></nlg-colors>
     <nlg-templates id="templates"></nlg-templates>
+
   </template>
   <script>
     class NLGApp extends Polymer.Element {
