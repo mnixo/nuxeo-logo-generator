@@ -31,9 +31,14 @@
       }
       svg-wrapper.displayed {
         display: flex;
-        margin: 1em 0;
-        border: dashed rgba(0, 0, 0, 0.1) 1px;
         width: fit-content;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gUQFToDqewmngAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAGUlEQVQIHQEOAPH/Aebm5tzc3ALc3NwkJCRFcghK/x9NRAAAAABJRU5ErkJggg==');
+        background-size: 20px 20px;
+        image-rendering: pixelated;
+      }
+      div.svg-container {
+        border: dashed rgba(0, 0, 0, 0.5) 1px;
+        margin: 1em 0;
       }
       .dimensions,
       .color {
@@ -85,7 +90,10 @@
     <nlg-color-picker label="Background" fill="{{backgroundFill}}" opacity="{{backgroundOpacity}}"></nlg-color-picker>
 
     <paper-button raised on-click="_download">Download</paper-button>
-    <svg-wrapper class="displayed" svg-data="[[content]]"></svg-wrapper>
+
+    <div class="svg-container">
+      <svg-wrapper class="displayed" svg-data="[[content]]"></svg-wrapper>
+    </div>
     <svg-wrapper class="hidden" id="svgWrapper" svg-data="[[content]]" pre-render></svg-wrapper>
     <a id="downloadLink" hidden></a>
 
