@@ -30,6 +30,9 @@
       nlg-size-picker {
         display: flex;
       }
+      paper-checkbox.show-alpha {
+        margin-top: 1em;
+      }
       paper-button.download {
         background-color: #fff;
         margin-top: 1em;
@@ -43,7 +46,7 @@
         display: flex;
         width: fit-content;
       }
-      svg-wrapper.with-alpha {
+      svg-wrapper.show-alpha {
         background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gUQFToDqewmngAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAGUlEQVQIHQEOAPH/Aebm5tzc3ALc3NwkJCRFcghK/x9NRAAAAABJRU5ErkJggg==');
         background-size: 20px 20px;
         image-rendering: pixelated;
@@ -76,12 +79,12 @@
       <nlg-color-picker label="Background" fill="{{backgroundFill}}" opacity="{{backgroundOpacity}}"></nlg-color-picker>
     </template>
 
-    <paper-checkbox checked="{{_showAlphaLayer}}">Show alpha layer in the preview</paper-checkbox>
+    <paper-checkbox class="show-alpha" checked="{{_showAlphaLayer}}">Show alpha layer in the preview</paper-checkbox>
 
     <paper-button class="download" raised on-click="_download">Download</paper-button>
 
     <div class="svg-wrapper-container">
-      <svg-wrapper class$="displayed [[_previewClass(_showAlphaLayer)]]" svg-data="[[content]]"></svg-wrapper>
+      <svg-wrapper class$="displayed [[_getAlphaClass(_showAlphaLayer)]]" svg-data="[[content]]"></svg-wrapper>
     </div>
 
     <svg-wrapper class="hidden" id="svgWrapper" svg-data="[[content]]" pre-render></svg-wrapper>
@@ -172,8 +175,8 @@
         link.click();
       }
 
-      _previewClass() {
-        return this._showAlphaLayer ? 'with-alpha' : '';
+      _getAlphaClass() {
+        return this._showAlphaLayer ? 'show-alpha' : '';
       }
 
     }
