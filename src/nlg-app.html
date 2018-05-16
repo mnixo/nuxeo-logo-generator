@@ -23,8 +23,16 @@
         flex-direction: column;
         align-items: center;
       }
-      paper-dropdown-menu {
+      paper-dropdown-menu.template-picker {
         width: 18em;
+      }
+      nlg-color-picker,
+      nlg-size-picker {
+        display: flex;
+      }
+      paper-button.download {
+        background-color: #fff;
+        margin-top: 1em;
       }
       svg-wrapper.hidden {
         width: 0;
@@ -40,21 +48,13 @@
         background-size: 20px 20px;
         image-rendering: pixelated;
       }
-      div.svg-container {
+      div.svg-wrapper-container {
         border: dashed rgba(0, 0, 0, 0.5) 1px;
         margin: 1em 0;
       }
-      nlg-color-picker,
-      nlg-size-picker {
-        display: flex;
-      }
-      paper-button {
-        background-color: #fff;
-        margin-top: 1em;
-      }
     </style>
 
-    <paper-dropdown-menu label="Logo Template" on-iron-select="_itemSelected">
+    <paper-dropdown-menu class="template-picker" label="Logo Template" on-iron-select="_itemSelected">
       <paper-listbox slot="dropdown-content" selected="0">
         <template is="dom-repeat" items="[[_getTemplates()]]">
           <paper-item id="[[item.id]]">[[item.id]]</paper-item>
@@ -78,11 +78,12 @@
 
     <paper-checkbox checked="{{_showAlphaLayer}}">Show alpha layer in the preview</paper-checkbox>
 
-    <paper-button raised on-click="_download">Download</paper-button>
+    <paper-button class="download" raised on-click="_download">Download</paper-button>
 
-    <div class="svg-container">
+    <div class="svg-wrapper-container">
       <svg-wrapper class$="displayed [[_previewClass(_showAlphaLayer)]]" svg-data="[[content]]"></svg-wrapper>
     </div>
+
     <svg-wrapper class="hidden" id="svgWrapper" svg-data="[[content]]" pre-render></svg-wrapper>
     <a id="downloadLink" hidden></a>
 
