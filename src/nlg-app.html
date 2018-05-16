@@ -12,6 +12,7 @@
 <link rel="import" href="../bower_components/svg-wrapper/svg-wrapper.html">
 <link rel="import" href="nlg-color-picker.html">
 <link rel="import" href="nlg-colors.html">
+<link rel="import" href="nlg-size-picker.html">
 <link rel="import" href="nlg-templates.html">
 
 <dom-module id="nlg-app">
@@ -43,19 +44,8 @@
         border: dashed rgba(0, 0, 0, 0.5) 1px;
         margin: 1em 0;
       }
-      .dimensions {
-        display: flex;
-      }
-      .dimensions > paper-input {
-        width: 8em;
-        text-align: center;
-      }
-      .dimensions > span {
-        font-family: 'Roboto', sans-serif;
-        margin: 1em 1em 0 1em;
-        align-self: center;
-      }
-      nlg-color-picker {
+      nlg-color-picker,
+      nlg-size-picker {
         display: flex;
       }
       paper-button {
@@ -71,17 +61,8 @@
         </template>
       </paper-listbox>
     </paper-dropdown-menu>
-    <div class="dimensions">
-      <paper-input label="Height" value="{{height}}" type="Number" allowed-pattern="[0-9]">
-        <iron-icon slot="prefix" icon="unfold-more"></iron-icon>
-        <div slot="suffix">px</div>
-      </paper-input>
-      <span>x</span>
-      <paper-input label="Width" value="{{width}}" type="Number" allowed-pattern="[0-9]">
-        <iron-icon slot="prefix" icon="code"></iron-icon>
-        <div slot="suffix">px</div>
-      </paper-input>
-    </div>
+
+    <nlg-size-picker height="{{height}}" width="{{width}}"></nlg-size-picker>
 
     <template is="dom-if" if="[[template.primaryFill]]">
       <nlg-color-picker label="Primary" fill="{{primaryFill}}" opacity="{{primaryOpacity}}"></nlg-color-picker>

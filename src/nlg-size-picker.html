@@ -1,0 +1,53 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="nlg-size-picker">
+  <template>
+    <style>
+      paper-input {
+        width: 8em;
+        text-align: center;
+      }
+      span {
+        font-family: 'Roboto', sans-serif;
+        margin: 1em 1em 0 1em;
+        align-self: center;
+      }
+    </style>
+
+    <paper-input label="Height" value="{{height}}" type="Number" allowed-pattern="[0-9]">
+      <iron-icon slot="prefix" icon="unfold-more"></iron-icon>
+      <div slot="suffix">px</div>
+    </paper-input>
+
+    <span>x</span>
+
+    <paper-input label="Width" value="{{width}}" type="Number" allowed-pattern="[0-9]">
+      <iron-icon slot="prefix" icon="code"></iron-icon>
+      <div slot="suffix">px</div>
+    </paper-input>
+
+  </template>
+  <script>
+    class NLGSizePicker extends Polymer.Element {
+
+      static get is() {
+        return 'nlg-size-picker';
+      }
+
+      static get properties() {
+        return {
+          height: {
+            type: Number,
+            notify: true,
+          },
+          width: {
+            type: Number,
+            notify: true,
+          },
+        };
+      }
+
+    }
+    window.customElements.define(NLGSizePicker.is, NLGSizePicker);
+  </script>
+</dom-module>
