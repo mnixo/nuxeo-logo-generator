@@ -1,0 +1,19 @@
+{
+  "name": "nuxeo-logo-generator",
+  "version": "1.0.0",
+  "description": "Nuxeo Logo Generator",
+  "scripts": {
+    "start": "polymer serve",
+    "lint": "polymer lint",
+    "build": "polymer build",
+    "deploy": "gh-pages -d build/default"
+  },
+  "repository": "mnixo/nuxeo-logo-generator",
+  "author": "Miguel Nixo <mnixo@nuxeo.com>",
+  "license": "MIT",
+  "homepage": "https://mnixo.github.io/nuxeo-logo-generator",
+  "devDependencies": {
+    "gh-pages": "^1.1.0",
+    "polymer-cli": "^1.7.2"
+  }
+}
