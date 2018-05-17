@@ -25,7 +25,6 @@
     "type-detect": "1.0.0",
     "@webcomponents/webcomponentsjs": "2.0.0-beta.2"
   },
-  "main": "index.js",
   "dependencies": {
     "@polymer/iron-icon": "^3.0.0-pre.18",
     "@polymer/iron-icons": "^3.0.0-pre.18",
@@ -36,7 +35,6 @@
     "@polymer/paper-input": "^3.0.0-pre.18",
     "@polymer/paper-item": "^3.0.0-pre.18",
     "@polymer/paper-listbox": "^3.0.0-pre.18",
-    "@polymer/polymer": "^3.0.0",
-    "web-animations-js": "^2.3.1"
+    "@polymer/polymer": "^3.0.0"
   }
 }

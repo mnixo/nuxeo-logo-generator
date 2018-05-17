@@ -1,20 +1,19 @@
-import '../../@polymer/iron-icon/iron-icon.js';
-import '../../@polymer/iron-icons/iron-icons.js';
-import '../../@polymer/neon-animation/web-animations.js';
-import '../../@polymer/paper-button/paper-button.js';
-import '../../@polymer/paper-checkbox/paper-checkbox.js';
-import '../../@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-import '../../@polymer/paper-input/paper-input.js';
-import '../../@polymer/paper-item/paper-item.js';
-import '../../@polymer/paper-listbox/paper-listbox.js';
-import '../../@polymer/paper-styles/paper-styles.js';
-import { PolymerElement } from '../../@polymer/polymer/polymer-element.js';
-import '../../svg-wrapper/svg-wrapper.js';
+import '@polymer/iron-icon/iron-icon.js';
+import '@polymer/iron-icons/iron-icons.js';
+import '@polymer/paper-button/paper-button.js';
+import '@polymer/paper-checkbox/paper-checkbox.js';
+import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
+import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-item/paper-item.js';
+import '@polymer/paper-listbox/paper-listbox.js';
+import '@polymer/paper-styles/paper-styles.js';
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import './nlg-color-picker.js';
 import './nlg-colors.js';
 import './nlg-size-picker.js';
 import './nlg-templates.js';
-import { html } from '../../@polymer/polymer/lib/utils/html-tag.js';
+import './svg-wrapper.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 class NLGApp extends PolymerElement {
   static get template() {
     return html`
