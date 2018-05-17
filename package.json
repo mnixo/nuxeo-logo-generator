@@ -6,7 +6,7 @@
     "start": "polymer serve",
     "lint": "polymer lint",
     "build": "polymer build",
-    "deploy": "gh-pages -d build/default"
+    "deploy": "gh-pages -d build/es6-bundled"
   },
   "repository": "mnixo/nuxeo-logo-generator",
   "author": "Miguel Nixo <mnixo@nuxeo.com>",
