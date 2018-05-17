@@ -1,0 +1,21 @@
+language: node_js
+node_js: '8'
+cache:
+  directories:
+    - bower_components
+    - node_modules
+install:
+  - npm install -g bower
+  - bower install
+  - npm install
+before_script:
+  - npm run lint
+script:
+  - npm run build
+deploy:
+  local-dir: build/es6-bundled
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  on:
+    branch: master
