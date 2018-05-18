@@ -1,22 +1,23 @@
-<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/neon-animation/web-animations.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
-<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/svg-wrapper/svg-wrapper.html">
-<link rel="import" href="nlg-color-picker.html">
-<link rel="import" href="nlg-colors.html">
-<link rel="import" href="nlg-size-picker.html">
-<link rel="import" href="nlg-templates.html">
-
-<dom-module id="nlg-app">
-  <template>
+import '../../@polymer/iron-icon/iron-icon.js';
+import '../../@polymer/iron-icons/iron-icons.js';
+import '../../@polymer/neon-animation/web-animations.js';
+import '../../@polymer/paper-button/paper-button.js';
+import '../../@polymer/paper-checkbox/paper-checkbox.js';
+import '../../@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
+import '../../@polymer/paper-input/paper-input.js';
+import '../../@polymer/paper-item/paper-item.js';
+import '../../@polymer/paper-listbox/paper-listbox.js';
+import '../../@polymer/paper-styles/paper-styles.js';
+import { PolymerElement } from '../../@polymer/polymer/polymer-element.js';
+import '../../svg-wrapper/svg-wrapper.js';
+import './nlg-color-picker.js';
+import './nlg-colors.js';
+import './nlg-size-picker.js';
+import './nlg-templates.js';
+import { html } from '../../@polymer/polymer/lib/utils/html-tag.js';
+class NLGApp extends PolymerElement {
+  static get template() {
+    return html`
     <style>
       :host {
         display: flex;
@@ -81,105 +82,100 @@
 
     <paper-checkbox class="show-alpha" checked="{{_showAlphaLayer}}">Show alpha layer in the preview</paper-checkbox>
 
-    <paper-button class="download" raised on-click="_download">Download</paper-button>
+    <paper-button class="download" raised="" on-click="_download">Download</paper-button>
 
     <div class="svg-wrapper-container">
-      <svg-wrapper class$="displayed [[_getAlphaClass(_showAlphaLayer)]]" svg-data="[[content]]"></svg-wrapper>
+      <svg-wrapper class\$="displayed [[_getAlphaClass(_showAlphaLayer)]]" svg-data="[[content]]"></svg-wrapper>
     </div>
 
-    <svg-wrapper class="hidden" id="svgWrapper" svg-data="[[content]]" pre-render></svg-wrapper>
-    <a id="downloadLink" hidden></a>
+    <svg-wrapper class="hidden" id="svgWrapper" svg-data="[[content]]" pre-render=""></svg-wrapper>
+    <a id="downloadLink" hidden=""></a>
 
     <nlg-colors id="colors"></nlg-colors>
     <nlg-templates id="templates"></nlg-templates>
+`;
+  }
 
-  </template>
-  <script>
-    class NLGApp extends Polymer.Element {
+  static get is() {
+    return 'nlg-app';
+  }
 
-      static get is() {
-        return 'nlg-app';
-      }
+  static get properties() {
+    return {
+      content: String,
+      width: Number,
+      height: Number,
+      primaryFill: String,
+      primaryOpacity: Number,
+      secondaryFill: String,
+      secondaryOpacity: Number,
+      backgroundFill: String,
+      backgroundOpacity: Number,
+      template: Object,
+      _showAlphaLayer: {
+        type: Boolean,
+        value: true,
+      },
+    };
+  }
 
-      static get properties() {
-        return {
-          content: String,
-          width: Number,
-          height: Number,
-          primaryFill: String,
-          primaryOpacity: Number,
-          secondaryFill: String,
-          secondaryOpacity: Number,
-          backgroundFill: String,
-          backgroundOpacity: Number,
-          template: Object,
-          _showAlphaLayer: {
-            type: Boolean,
-            value: true,
-          },
-        };
-      }
+  static get observers() {
+    return [
+      '_computeContent(template, width, height, primaryFill, primaryOpacity, secondaryFill, secondaryOpacity,' +
+      'backgroundFill, backgroundOpacity)',
+    ]
+  }
 
-      static get observers() {
-        return [
-          '_computeContent(template, width, height, primaryFill, primaryOpacity, secondaryFill, secondaryOpacity,' +
-          'backgroundFill, backgroundOpacity)',
-        ]
-      }
+  ready() {
+    window.devicePixelRatio = 1;
+    super.ready();
+  }
 
-      ready() {
-        window.devicePixelRatio = 1;
-        super.ready();
-      }
+  _getColors() {
+    return this.$.colors.getAll();
+  }
 
-      _getColors() {
-        return this.$.colors.getAll();
-      }
+  _getTemplates() {
+    return this.$.templates.getAll();
+  }
 
-      _getTemplates() {
-        return this.$.templates.getAll();
-      }
-
-      _computeContent() {
-        if (!this.template) {
-          return this.content = '';
-        }
-        const width = this.width ? this.width : this.template.width;
-        const height = this.height ? this.height : this.template.height;
-        const primaryFill = this.primaryFill ? this.primaryFill : this.template.primaryFill;
-        const primaryOpacity = this.primaryOpacity ? this.primaryOpacity : this.template.primaryOpacity;
-        const secondaryFill = this.secondaryFill ? this.secondaryFill : this.template.secondaryFill;
-        const secondaryOpacity = this.secondaryOpacity ? this.secondaryOpacity : this.template.secondaryOpacity;
-        const backgroundFill = this.backgroundFill ? this.backgroundFill : this.template.backgroundFill;
-        const backgroundOpacity = this.backgroundOpacity ? this.backgroundOpacity : this.template.backgroundOpacity;
-        this.content = this.$.templates.getSkeleton(width, height, this.template.viewBox, primaryFill, primaryOpacity,
-          secondaryFill, secondaryOpacity, backgroundFill, backgroundOpacity, this.template.geometry);
-      }
-
-      _itemSelected(e) {
-        this.template = this.$.templates.get(e.detail.item.id);
-        this.width = this.template.width;
-        this.height = this.template.height;
-        this.primaryFill = this.template.primaryFill;
-        this.primaryOpacity = this.template.primaryOpacity;
-        this.secondaryFill = this.template.secondaryFill;
-        this.secondaryOpacity = this.template.secondaryOpacity;
-        this.backgroundFill = this.template.backgroundFill;
-        this.backgroundOpacity = this.template.backgroundOpacity;
-      }
-
-      _download() {
-        const link = this.$.downloadLink;
-        link.download = `${this.template.id}-${this.height}x${this.width}`;
-        link.href = this.$.svgWrapper.shadowRoot.querySelector('canvas').toDataURL("image/png");
-        link.click();
-      }
-
-      _getAlphaClass() {
-        return this._showAlphaLayer ? 'show-alpha' : '';
-      }
-
+  _computeContent() {
+    if (!this.template) {
+      return this.content = '';
     }
-    window.customElements.define(NLGApp.is, NLGApp);
-  </script>
-</dom-module>
+    const width = this.width ? this.width : this.template.width;
+    const height = this.height ? this.height : this.template.height;
+    const primaryFill = this.primaryFill ? this.primaryFill : this.template.primaryFill;
+    const primaryOpacity = this.primaryOpacity ? this.primaryOpacity : this.template.primaryOpacity;
+    const secondaryFill = this.secondaryFill ? this.secondaryFill : this.template.secondaryFill;
+    const secondaryOpacity = this.secondaryOpacity ? this.secondaryOpacity : this.template.secondaryOpacity;
+    const backgroundFill = this.backgroundFill ? this.backgroundFill : this.template.backgroundFill;
+    const backgroundOpacity = this.backgroundOpacity ? this.backgroundOpacity : this.template.backgroundOpacity;
+    this.content = this.$.templates.getSkeleton(width, height, this.template.viewBox, primaryFill, primaryOpacity,
+      secondaryFill, secondaryOpacity, backgroundFill, backgroundOpacity, this.template.geometry);
+  }
+
+  _itemSelected(e) {
+    this.template = this.$.templates.get(e.detail.item.id);
+    this.width = this.template.width;
+    this.height = this.template.height;
+    this.primaryFill = this.template.primaryFill;
+    this.primaryOpacity = this.template.primaryOpacity;
+    this.secondaryFill = this.template.secondaryFill;
+    this.secondaryOpacity = this.template.secondaryOpacity;
+    this.backgroundFill = this.template.backgroundFill;
+    this.backgroundOpacity = this.template.backgroundOpacity;
+  }
+
+  _download() {
+    const link = this.$.downloadLink;
+    link.download = `${this.template.id}-${this.height}x${this.width}`;
+    link.href = this.$.svgWrapper.shadowRoot.querySelector('canvas').toDataURL("image/png");
+    link.click();
+  }
+
+  _getAlphaClass() {
+    return this._showAlphaLayer ? 'show-alpha' : '';
+  }
+}
+window.customElements.define(NLGApp.is, NLGApp);
