@@ -1,3 +1,4 @@
+import { PolymerElement, html } from '@polymer/polymer/polymer-element';
 import '@polymer/iron-icon/iron-icon';
 import '@polymer/iron-icons/iron-icons';
 import '@polymer/paper-button/paper-button';
@@ -7,92 +8,91 @@ import '@polymer/paper-input/paper-input';
 import '@polymer/paper-item/paper-item';
 import '@polymer/paper-listbox/paper-listbox';
 import '@polymer/paper-styles/paper-styles';
-import { PolymerElement } from '@polymer/polymer/polymer-element';
-import './svg-wrapper.js';
-import './nlg-color-picker.js';
-import './nlg-colors.js';
-import './nlg-size-picker.js';
-import './nlg-templates.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag';
+import './nlg-color-picker';
+import './nlg-colors';
+import './nlg-size-picker';
+import './nlg-templates';
+import './svg-wrapper';
+
 class NLGApp extends PolymerElement {
   static get template() {
     return html`
-    <style>
-      :host {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      paper-dropdown-menu.template-picker {
-        width: 18em;
-      }
-      nlg-color-picker,
-      nlg-size-picker {
-        display: flex;
-      }
-      paper-checkbox.show-alpha {
-        margin-top: 1em;
-      }
-      paper-button.download {
-        background-color: #fff;
-        margin-top: 1em;
-      }
-      svg-wrapper.hidden {
-        width: 0;
-        height: 0;
-        opacity: 0;
-      }
-      svg-wrapper.displayed {
-        display: flex;
-        width: fit-content;
-      }
-      svg-wrapper.show-alpha {
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gUQFToDqewmngAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAGUlEQVQIHQEOAPH/Aebm5tzc3ALc3NwkJCRFcghK/x9NRAAAAABJRU5ErkJggg==');
-        background-size: 20px 20px;
-        image-rendering: pixelated;
-      }
-      div.svg-wrapper-container {
-        border: dashed rgba(0, 0, 0, 0.5) 1px;
-        margin: 1em 0;
-      }
-    </style>
-
-    <paper-dropdown-menu class="template-picker" label="Logo Template" on-iron-select="_itemSelected">
-      <paper-listbox slot="dropdown-content" selected="0">
-        <template is="dom-repeat" items="[[_getTemplates()]]">
-          <paper-item id="[[item.id]]">[[item.id]]</paper-item>
-        </template>
-      </paper-listbox>
-    </paper-dropdown-menu>
-
-    <nlg-size-picker height="{{height}}" width="{{width}}"></nlg-size-picker>
-
-    <template is="dom-if" if="[[template.primaryFill]]">
-      <nlg-color-picker label="Primary" fill="{{primaryFill}}" opacity="{{primaryOpacity}}"></nlg-color-picker>
-    </template>
-
-    <template is="dom-if" if="[[template.secondaryFill]]">
-      <nlg-color-picker label="Secondary" fill="{{secondaryFill}}" opacity="{{secondaryOpacity}}"></nlg-color-picker>
-    </template>
-
-    <template is="dom-if" if="[[template.backgroundFill]]">
-      <nlg-color-picker label="Background" fill="{{backgroundFill}}" opacity="{{backgroundOpacity}}"></nlg-color-picker>
-    </template>
-
-    <paper-checkbox class="show-alpha" checked="{{_showAlphaLayer}}">Show alpha layer in the preview</paper-checkbox>
-
-    <paper-button class="download" raised="" on-click="_download">Download</paper-button>
-
-    <div class="svg-wrapper-container">
-      <svg-wrapper class\$="displayed [[_getAlphaClass(_showAlphaLayer)]]" svg-data="[[content]]"></svg-wrapper>
-    </div>
-
-    <svg-wrapper class="hidden" id="svgWrapper" svg-data="[[content]]" pre-render=""></svg-wrapper>
-    <a id="downloadLink" hidden=""></a>
-
-    <nlg-colors id="colors"></nlg-colors>
-    <nlg-templates id="templates"></nlg-templates>
-`;
+      <style>
+        :host {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        paper-dropdown-menu.template-picker {
+          width: 18em;
+        }
+        nlg-color-picker,
+        nlg-size-picker {
+          display: flex;
+        }
+        paper-checkbox.show-alpha {
+          margin-top: 1em;
+        }
+        paper-button.download {
+          background-color: #fff;
+          margin-top: 1em;
+        }
+        svg-wrapper.hidden {
+          width: 0;
+          height: 0;
+          opacity: 0;
+        }
+        svg-wrapper.displayed {
+          display: flex;
+          width: fit-content;
+        }
+        svg-wrapper.show-alpha {
+          background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gUQFToDqewmngAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAGUlEQVQIHQEOAPH/Aebm5tzc3ALc3NwkJCRFcghK/x9NRAAAAABJRU5ErkJggg==');
+          background-size: 20px 20px;
+          image-rendering: pixelated;
+        }
+        div.svg-wrapper-container {
+          border: dashed rgba(0, 0, 0, 0.5) 1px;
+          margin: 1em 0;
+        }
+      </style>
+  
+      <paper-dropdown-menu class="template-picker" label="Logo Template" on-iron-select="_itemSelected">
+        <paper-listbox slot="dropdown-content" selected="0">
+          <template is="dom-repeat" items="[[_getTemplates()]]">
+            <paper-item id="[[item.id]]">[[item.id]]</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
+  
+      <nlg-size-picker height="{{height}}" width="{{width}}"></nlg-size-picker>
+  
+      <template is="dom-if" if="[[template.primaryFill]]">
+        <nlg-color-picker label="Primary" fill="{{primaryFill}}" opacity="{{primaryOpacity}}"></nlg-color-picker>
+      </template>
+  
+      <template is="dom-if" if="[[template.secondaryFill]]">
+        <nlg-color-picker label="Secondary" fill="{{secondaryFill}}" opacity="{{secondaryOpacity}}"></nlg-color-picker>
+      </template>
+  
+      <template is="dom-if" if="[[template.backgroundFill]]">
+        <nlg-color-picker label="Background" fill="{{backgroundFill}}" opacity="{{backgroundOpacity}}"></nlg-color-picker>
+      </template>
+  
+      <paper-checkbox class="show-alpha" checked="{{_showAlphaLayer}}">Show alpha layer in the preview</paper-checkbox>
+  
+      <paper-button class="download" raised="" on-click="_download">Download</paper-button>
+  
+      <div class="svg-wrapper-container">
+        <svg-wrapper class\$="displayed [[_getAlphaClass(_showAlphaLayer)]]" svg-data="[[content]]"></svg-wrapper>
+      </div>
+  
+      <svg-wrapper class="hidden" id="svgWrapper" svg-data="[[content]]" pre-render=""></svg-wrapper>
+      <a id="downloadLink" hidden=""></a>
+  
+      <nlg-colors id="colors"></nlg-colors>
+      <nlg-templates id="templates"></nlg-templates>
+    `;
   }
 
   static get is() {
