@@ -1,10 +1,8 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element';
-import { html } from '@polymer/polymer/lib/utils/html-tag';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element';
+
 class NLGTemplates extends PolymerElement {
   static get template() {
-    return html`
-
-`;
+    return html``;
   }
 
   static get is() {

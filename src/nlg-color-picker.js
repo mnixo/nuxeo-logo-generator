@@ -1,58 +1,58 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element';
+import { PolymerElement, html } from '@polymer/polymer/polymer-element';
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu';
 import '@polymer/paper-listbox/paper-listbox';
 import '@polymer/paper-item/paper-item';
-import './nlg-colors.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag';
+import './nlg-colors';
+
 class NLGColorPicker extends PolymerElement {
   static get template() {
     return html`
-    <style>
-      div.color-preview {
-        width: 20px;
-        height: 20px;
-        border: solid black 1px;
-        border-radius: 1em;
-      }
-      .color-preview {
-        margin-right: 0.5em;
-      }
-      paper-dropdown-menu {
-        width: 10em;
-      }
-      paper-input.fill {
-        width: 5em;
-        margin: 0 1em;
-        text-align: center;
-      }
-      paper-input.opacity {
-        width: 3em;
-        text-align: center;
-      }
-    </style>
-
-    <paper-dropdown-menu label="[[label]] Color">
-      <paper-listbox id="colorList" slot="dropdown-content" selected="{{_selected}}">
-        <template is="dom-repeat" items="[[_getColors()]]">
-          <paper-item>
-            <div class="color-preview" style\$="background-color:[[item.value]];"></div>
-            [[item.id]]
+      <style>
+        div.color-preview {
+          width: 20px;
+          height: 20px;
+          border: solid black 1px;
+          border-radius: 1em;
+        }
+        .color-preview {
+          margin-right: 0.5em;
+        }
+        paper-dropdown-menu {
+          width: 10em;
+        }
+        paper-input.fill {
+          width: 5em;
+          margin: 0 1em;
+          text-align: center;
+        }
+        paper-input.opacity {
+          width: 3em;
+          text-align: center;
+        }
+      </style>
+  
+      <paper-dropdown-menu label="[[label]] Color">
+        <paper-listbox id="colorList" slot="dropdown-content" selected="{{_selected}}">
+          <template is="dom-repeat" items="[[_getColors()]]">
+            <paper-item>
+              <div class="color-preview" style\$="background-color:[[item.value]];"></div>
+              [[item.id]]
+            </paper-item>
+          </template>
+          <paper-item disabled="">
+            <iron-icon class="color-preview" icon="help"></iron-icon>
+            Custom
           </paper-item>
-        </template>
-        <paper-item disabled="">
-          <iron-icon class="color-preview" icon="help"></iron-icon>
-          Custom
-        </paper-item>
-      </paper-listbox>
-    </paper-dropdown-menu>
-
-    <paper-input class="fill" label="Fill" value="{{fill}}"></paper-input>
-
-    <paper-input class="opacity" label="Opacity" value="{{opacity}}" type="Number" max="1" min="0" step="0.1">
-    </paper-input>
-
-    <nlg-colors id="colors"></nlg-colors>
-`;
+        </paper-listbox>
+      </paper-dropdown-menu>
+  
+      <paper-input class="fill" label="Fill" value="{{fill}}"></paper-input>
+  
+      <paper-input class="opacity" label="Opacity" value="{{opacity}}" type="Number" max="1" min="0" step="0.1">
+      </paper-input>
+  
+      <nlg-colors id="colors"></nlg-colors>
+    `;
   }
 
   static get is() {
