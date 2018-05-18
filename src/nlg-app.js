@@ -9,7 +9,7 @@ import '../../@polymer/paper-item/paper-item.js';
 import '../../@polymer/paper-listbox/paper-listbox.js';
 import '../../@polymer/paper-styles/paper-styles.js';
 import { PolymerElement } from '../../@polymer/polymer/polymer-element.js';
-import '../../svg-wrapper/svg-wrapper.js';
+import './svg-wrapper.js';
 import './nlg-color-picker.js';
 import './nlg-colors.js';
 import './nlg-size-picker.js';
