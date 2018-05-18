@@ -1,9 +1,9 @@
-import { PolymerElement } from '../../@polymer/polymer/polymer-element.js';
-import '../../@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-import '../../@polymer/paper-listbox/paper-listbox.js';
-import '../../@polymer/paper-item/paper-item.js';
+import { PolymerElement } from '@polymer/polymer/polymer-element';
+import '@polymer/paper-dropdown-menu/paper-dropdown-menu';
+import '@polymer/paper-listbox/paper-listbox';
+import '@polymer/paper-item/paper-item';
 import './nlg-colors.js';
-import { html } from '../../@polymer/polymer/lib/utils/html-tag.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag';
 class NLGColorPicker extends PolymerElement {
   static get template() {
     return html`

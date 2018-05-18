@@ -1,7 +1,7 @@
-import { PolymerElement } from '../../@polymer/polymer/polymer-element.js';
-import '../../@polymer/paper-input/paper-input.js';
-import '../../@polymer/iron-icon/iron-icon.js';
-import { html } from '../../@polymer/polymer/lib/utils/html-tag.js';
+import { PolymerElement } from '@polymer/polymer/polymer-element';
+import '@polymer/paper-input/paper-input';
+import '@polymer/iron-icon/iron-icon';
+import { html } from '@polymer/polymer/lib/utils/html-tag';
 class NLGSizePicker extends PolymerElement {
   static get template() {
     return html`
