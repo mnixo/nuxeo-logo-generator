@@ -1,11 +1,12 @@
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="nlg-colors.html">
-
-<dom-module id="nlg-color-picker">
-  <template>
+import { PolymerElement } from '../../@polymer/polymer/polymer-element.js';
+import '../../@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
+import '../../@polymer/paper-listbox/paper-listbox.js';
+import '../../@polymer/paper-item/paper-item.js';
+import './nlg-colors.js';
+import { html } from '../../@polymer/polymer/lib/utils/html-tag.js';
+class NLGColorPicker extends PolymerElement {
+  static get template() {
+    return html`
     <style>
       div.color-preview {
         width: 20px;
@@ -34,11 +35,11 @@
       <paper-listbox id="colorList" slot="dropdown-content" selected="{{_selected}}">
         <template is="dom-repeat" items="[[_getColors()]]">
           <paper-item>
-            <div class="color-preview" style$="background-color:[[item.value]];"></div>
+            <div class="color-preview" style\$="background-color:[[item.value]];"></div>
             [[item.id]]
           </paper-item>
         </template>
-        <paper-item disabled>
+        <paper-item disabled="">
           <iron-icon class="color-preview" icon="help"></iron-icon>
           Custom
         </paper-item>
@@ -51,53 +52,48 @@
     </paper-input>
 
     <nlg-colors id="colors"></nlg-colors>
+`;
+  }
 
-  </template>
-  <script>
-    class NLGColorPicker extends Polymer.Element {
+  static get is() {
+    return 'nlg-color-picker';
+  }
 
-      static get is() {
-        return 'nlg-color-picker';
+  static get properties() {
+    return {
+      fill: {
+        type: String,
+        notify: true,
+        observer: '_onFillChange',
+      },
+      label: String,
+      opacity: {
+        type: Number,
+        notify: true,
+      },
+      _selected: {
+        type: Number,
+        observer: '_onSelectedChange',
       }
+    };
+  }
 
-      static get properties() {
-        return {
-          fill: {
-            type: String,
-            notify: true,
-            observer: '_onFillChange',
-          },
-          label: String,
-          opacity: {
-            type: Number,
-            notify: true,
-          },
-          _selected: {
-            type: Number,
-            observer: '_onSelectedChange',
-          }
-        };
-      }
+  _getColors() {
+    return this.$.colors.getAll();
+  }
 
-      _getColors() {
-        return this.$.colors.getAll();
-      }
+  _onFillChange() {
+    const colors = this._getColors();
+    const defaultColor = colors.find(color => color.value.toLowerCase() === this.fill.toLowerCase());
+    this.$.colorList.selected = defaultColor ? colors.indexOf(defaultColor) : colors.length;
+  }
 
-      _onFillChange() {
-        const colors = this._getColors();
-        const defaultColor = colors.find(color => color.value.toLowerCase() === this.fill.toLowerCase());
-        this.$.colorList.selected = defaultColor ? colors.indexOf(defaultColor) : colors.length;
-      }
-
-      _onSelectedChange() {
-        const colors = this._getColors();
-        if (this._selected === colors.length) {
-          return;
-        }
-        this.fill = colors[this._selected].value;
-      }
-
+  _onSelectedChange() {
+    const colors = this._getColors();
+    if (this._selected === colors.length) {
+      return;
     }
-    window.customElements.define(NLGColorPicker.is, NLGColorPicker);
-  </script>
-</dom-module>
+    this.fill = colors[this._selected].value;
+  }
+}
+window.customElements.define(NLGColorPicker.is, NLGColorPicker);

@@ -1,19 +1,12 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-    <title>Nuxeo Logo Generator</title>
-    <meta name="description" content="Nuxeo Logo Generator">
-    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="src/nlg-app.html">
-  </head>
-  <body>
-    <style>
+import './src/nlg-app.js';
+import '../@webcomponents/webcomponentsjs/webcomponents-loader.js';
+const $_documentContainer = document.createElement('template');
+$_documentContainer.setAttribute('style', 'display: none;');
+
+$_documentContainer.innerHTML = `<title>Nuxeo Logo Generator</title><style>
       body {
         background-color: #eee;
       }
-    </style>
-    <nlg-app></nlg-app>
-  </body>
-</html>
+    </style><nlg-app></nlg-app>`;
+
+document.head.appendChild($_documentContainer.content);
