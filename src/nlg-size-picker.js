@@ -1,34 +1,37 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element';
-import '@polymer/paper-input/paper-input';
-import '@polymer/iron-icon/iron-icon';
+import { LitElement, html } from '@polymer/lit-element';
 
-class NLGSizePicker extends PolymerElement {
-  static get template() {
+const MIN = 1, MAX = 8192;
+
+class NLGSizePicker extends LitElement {
+  _render({width, height}) {
+
     return html`
-      <style>
-        paper-input {
-          width: 8em;
-          text-align: center;
-        }
-        span {
-          font-family: 'Roboto', sans-serif;
-          margin: 1em 1em 0 1em;
-          align-self: center;
-        }
-      </style>
-  
-      <paper-input id="height" label="Height" value="{{height}}" type="Number" allowed-pattern="[0-9]" min="[[_min]]" max="[[_max]]" error-message="[[_min]] to [[_max]] pixels">
-        <iron-icon slot="prefix" icon="unfold-more"></iron-icon>
-        <div slot="suffix">px</div>
-      </paper-input>
-  
-      <span>x</span>
-  
-      <paper-input id="width" label="Width" value="{{width}}" type="Number" allowed-pattern="[0-9]" min="[[_min]]" max="[[_max]]" error-message="[[_min]] to [[_max]] pixels">
-        <iron-icon slot="prefix" icon="code"></iron-icon>
-        <div slot="suffix">px</div>
-      </paper-input>
-    `;
+    <style>
+      paper-input {
+        width: 8em;
+        text-align: center;
+      }
+      span {
+        font-family: 'Roboto', sans-serif;
+        margin: 1em 1em 0 1em;
+        align-self: center;
+      }
+    </style>
+
+    <paper-input id="height" label="Height" value="${height}" type="Number" allowed-pattern="[0-9]" min="${MIN}" max="${MAX}" error-message="${MIN} to ${MAX} pixels"
+      on-value-changed="${(e) => this._setSize({height: e.target.value}) }" invalid="${height < MIN || height > MAX}">
+      <iron-icon slot="prefix" icon="unfold-more"></iron-icon>
+      <div slot="suffix">px</div>
+    </paper-input>
+
+    <span>x</span>
+
+    <paper-input id="width" label="Width" value="${width}" type="Number" allowed-pattern="[0-9]" min="${MIN}" max="${MAX}" error-message="${MIN} to ${MAX} pixels"
+      on-value-changed="${(e) => this._setSize({width: e.target.value})}" invalid="${width < MIN || width > MAX}">
+      <iron-icon slot="prefix" icon="code"></iron-icon>
+      <div slot="suffix">px</div>
+    </paper-input>
+`;
   }
 
   static get is() {
@@ -37,39 +40,19 @@ class NLGSizePicker extends PolymerElement {
 
   static get properties() {
     return {
-      height: {
-        type: Number,
-        notify: true,
-        observer: '_validateHeight',
-      },
-      width: {
-        type: Number,
-        notify: true,
-        observer: '_validateWidth',
-      },
-      _min: {
-        type: Number,
-        value: 1,
-      },
-      _max: {
-        type: Number,
-        value: 8192,
-      }
+      height: Number,
+      width: Number,
+    
       // `svg-wrapper` can't download square images larger than 8836x8836 pixels
       // 8192 is just prettier than 8836
     };
+    
   }
 
-  _isValidInput(value) {
-    return value >= this._min && value <= this._max;
-  }
-
-  _validateHeight() {
-    this.$.height.invalid = !this._isValidInput(this.height);
-  }
-
-  _validateWidth() {
-    this.$.width.invalid = !this._isValidInput(this.width);
+  _setSize({width, height}) {
+    if (width) this.width = width;
+    if (height) this.height = height;
+    this.dispatchEvent(new CustomEvent('size-changed', {detail: {width: this.width, height: this.height}}));
   }
 }
-window.customElements.define(NLGSizePicker.is, NLGSizePicker);
+window.customElements.define('nlg-size-picker', NLGSizePicker);

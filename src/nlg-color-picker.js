@@ -1,99 +1,76 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element';
-import '@polymer/paper-dropdown-menu/paper-dropdown-menu';
-import '@polymer/paper-listbox/paper-listbox';
-import '@polymer/paper-item/paper-item';
-import './nlg-colors';
+import { LitElement, html } from '@polymer/lit-element';
+import { COLORS } from './colors.js';
+class NLGColorPicker extends LitElement {
+  _render({label, fill, opacity}) {
 
-class NLGColorPicker extends PolymerElement {
-  static get template() {
+    let selected = 0;
+    if (fill) {
+      const defaultColor = COLORS.find(color => color.value.toLowerCase() === fill.toLowerCase());
+      selected = defaultColor ? COLORS.indexOf(defaultColor) : COLORS.length;
+    }
+    
     return html`
-      <style>
-        div.color-preview {
-          width: 20px;
-          height: 20px;
-          border: solid black 1px;
-          border-radius: 1em;
-        }
-        .color-preview {
-          margin-right: 0.5em;
-        }
-        paper-dropdown-menu {
-          width: 10em;
-        }
-        paper-input.fill {
-          width: 5em;
-          margin: 0 1em;
-          text-align: center;
-        }
-        paper-input.opacity {
-          width: 3em;
-          text-align: center;
-        }
-      </style>
-  
-      <paper-dropdown-menu label="[[label]] Color">
-        <paper-listbox id="colorList" slot="dropdown-content" selected="{{_selected}}">
-          <template is="dom-repeat" items="[[_getColors()]]">
-            <paper-item>
-              <div class="color-preview" style\$="background-color:[[item.value]];"></div>
-              [[item.id]]
-            </paper-item>
-          </template>
-          <paper-item disabled="">
-            <iron-icon class="color-preview" icon="help"></iron-icon>
-            Custom
+    <style>
+      div.color-preview {
+        width: 20px;
+        height: 20px;
+        border: solid black 1px;
+        border-radius: 1em;
+      }
+      .color-preview {
+        margin-right: 0.5em;
+      }
+      paper-dropdown-menu {
+        width: 10em;
+      }
+      paper-input.fill {
+        width: 5em;
+        margin: 0 1em;
+        text-align: center;
+      }
+      paper-input.opacity {
+        width: 3em;
+        text-align: center;
+      }
+    </style>
+
+    <paper-dropdown-menu label="${label} Color">
+      <paper-listbox id="colorList" slot="dropdown-content" selected="${selected}" on-iron-select="${e => this._setColor({selected: e.target.selected})}">
+        ${COLORS.map((c) => html`
+          <paper-item>
+            <div class="color-preview" style$="background-color:${c.value}"></div>
+            ${c.id}
           </paper-item>
-        </paper-listbox>
-      </paper-dropdown-menu>
-  
-      <paper-input class="fill" label="Fill" value="{{fill}}"></paper-input>
-  
-      <paper-input class="opacity" label="Opacity" value="{{opacity}}" type="Number" max="1" min="0" step="0.1">
-      </paper-input>
-  
-      <nlg-colors id="colors"></nlg-colors>
-    `;
+          `)}
+        <paper-item disabled>
+          <iron-icon class="color-preview" icon="help"></iron-icon>
+          Custom
+        </paper-item>
+      </paper-listbox>
+    </paper-dropdown-menu>
+
+    <paper-input class="fill" label="Fill" value="${fill}" on-value-changed="${e => this._setColor({fill: e.target.value})}"></paper-input>
+
+    <paper-input class="opacity" label="Opacity" value="${opacity}" type="Number" max="1" min="0" step="0.1" on-value-changed="${e => this._setColor({opacity: e.target.value})}">
+    </paper-input>
+`;
   }
 
-  static get is() {
-    return 'nlg-color-picker';
+  _setColor({selected, fill, opacity}) {
+    if (selected && selected !== COLORS.length) {
+      this.fill = COLORS[selected].value;
+    }
+    if (fill) this.fill = fill;
+    if (opacity) this.opacity = opacity;
+    this.dispatchEvent(new CustomEvent('color-changed', {detail: {fill: this.fill, opacity: this.opacity}}));
   }
 
   static get properties() {
     return {
-      fill: {
-        type: String,
-        notify: true,
-        observer: '_onFillChange',
-      },
+      fill: String,
       label: String,
-      opacity: {
-        type: Number,
-        notify: true,
-      },
-      _selected: {
-        type: Number,
-        observer: '_onSelectedChange',
-      }
+      opacity: Number
     };
   }
-
-  _getColors() {
-    return this.$.colors.getAll();
-  }
-
-  _onFillChange() {
-    const colors = this._getColors();
-    const defaultColor = colors.find(color => color.value.toLowerCase() === this.fill.toLowerCase());
-    this.$.colorList.selected = defaultColor ? colors.indexOf(defaultColor) : colors.length;
-  }
-
-  _onSelectedChange() {
-    const colors = this._getColors();
-    if (this._selected === colors.length) {
-      return;
-    }
-    this.fill = colors[this._selected].value;
-  }
 }
-window.customElements.define(NLGColorPicker.is, NLGColorPicker);
+window.customElements.define('nlg-color-picker', NLGColorPicker);

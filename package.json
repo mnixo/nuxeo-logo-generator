@@ -4,6 +4,7 @@
   "homepage": "https://mnixo.github.io/nuxeo-logo-generator",
   "name": "nuxeo-logo-generator",
   "version": "1.0.0",
+  "flat": true,
   "scripts": {
     "start": "polymer serve",
     "lint": "polymer lint",
@@ -13,7 +14,6 @@
   "license": "MIT",
   "devDependencies": {
     "polymer-cli": "^1.7.2",
-    "wct-browser-legacy": "^0.0.1-pre.11",
     "@webcomponents/webcomponentsjs": "^2.0.0"
   },
   "resolutions": {
@@ -27,6 +27,7 @@
   "dependencies": {
     "@polymer/iron-icon": "^3.0.0-pre.18",
     "@polymer/iron-icons": "^3.0.0-pre.18",
+    "@polymer/lit-element": "^0.5.1",
     "@polymer/neon-animation": "^3.0.0-pre.18",
     "@polymer/paper-button": "^3.0.0-pre.18",
     "@polymer/paper-checkbox": "^3.0.0-pre.18",
@@ -34,7 +35,6 @@
     "@polymer/paper-input": "^3.0.0-pre.18",
     "@polymer/paper-item": "^3.0.0-pre.18",
     "@polymer/paper-listbox": "^3.0.0-pre.18",
-    "@polymer/polymer": "^3.0.0",
     "web-animations-js": "^2.3.1"
   }
 }
