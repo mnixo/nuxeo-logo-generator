@@ -144,9 +144,14 @@ export const TEMPLATES = {
 
 
 export const getSkeleton = (template, params) => {
-  if (!template) return ''
+  if (!template) {
+    return '';
+  }
   const options = Object.assign({}, TEMPLATES[template]);
-  const {width, height, viewBox, primaryFill, primaryOpacity, secondaryFill, secondaryOpacity, backgroundFill, backgroundOpacity, geometry} = Object.assign(options, params);
+  const {
+    width, height, viewBox, primaryFill, primaryOpacity,
+    secondaryFill, secondaryOpacity, backgroundFill, backgroundOpacity, geometry,
+  } = Object.assign(options, params);
   return `
     <svg xmlns="http://www.w3.org/2000/svg" width="${width}px" height="${height}px" viewBox="${viewBox}">
       <defs>

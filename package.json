@@ -6,15 +6,18 @@
   "version": "1.0.0",
   "flat": true,
   "scripts": {
-    "start": "polymer serve",
-    "lint": "polymer lint",
-    "build": "polymer build"
+    "start": "./node_modules/polymer-cli/bin/polymer.js serve",
+    "lint": "./node_modules/polymer-cli/bin/polymer.js lint",
+    "build": "./node_modules/polymer-cli/bin/polymer.js build",
+    "eslint": "./node_modules/eslint/bin/eslint.js src"
   },
   "author": "Miguel Nixo <mnixo@nuxeo.com>",
   "license": "MIT",
   "devDependencies": {
-    "polymer-cli": "^1.7.2",
-    "@webcomponents/webcomponentsjs": "^2.0.0"
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-polymer": "^0.2.1",
+    "polymer-cli": "^1.7.2"
   },
   "resolutions": {
     "inherits": "2.0.3",

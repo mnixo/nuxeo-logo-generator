@@ -1,0 +1,64 @@
+{
+  "extends": [
+    "plugin:polymer/polymer-2"
+  ],
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": [
+    "polymer"
+  ],
+  "rules": {
+    "array-bracket-spacing": [
+      "error",
+      "always"
+    ],
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
+    "curly": [
+      "error",
+      "all"
+    ],
+    "indent": [
+      "error",
+      2
+    ],
+    "max-len": [
+      "error", {
+        "code": 120,
+        "ignoreTemplateLiterals": true
+      }
+    ],
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectExpression": {
+          "multiline": true,
+          "minProperties": 1
+        }
+      }
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "object-property-newline": [
+      "error", {
+        "allowAllPropertiesOnSameLine": false
+      }
+    ],
+    "require-jsdoc": [
+      "error", {
+        "require": {
+          "FunctionDeclaration": false,
+          "MethodDefinition": false,
+          "ClassDeclaration": false,
+          "ArrowFunctionExpression": false,
+          "FunctionExpression": false
+        }
+      }
+    ]
+  }
+}

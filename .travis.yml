@@ -7,7 +7,9 @@ cache:
 install:
   - npm install -g
   - npm install
-before_script: npm run lint
+before_script:
+  - npm run lint
+  - npm run eslint
 script: npm run build
 deploy:
   local-dir: build/es6-bundled
