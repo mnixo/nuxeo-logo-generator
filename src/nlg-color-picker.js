@@ -1,13 +1,13 @@
 import { LitElement, html } from '@polymer/lit-element';
 import { COLORS } from './colors.js';
+
 class NLGColorPicker extends LitElement {
   _render({ label, fill, opacity }) {
-    let selected = 0;
+    let selected;
     if (fill) {
       const defaultColor = COLORS.find(color => color.value.toLowerCase() === fill.toLowerCase());
       selected = defaultColor ? COLORS.indexOf(defaultColor) : COLORS.length;
     }
-
     return html`
     <style>
       div.color-preview {
@@ -35,12 +35,7 @@ class NLGColorPicker extends LitElement {
 
     <paper-dropdown-menu label="${label} Color">
       <paper-listbox id="colorList" slot="dropdown-content" selected="${selected}" on-iron-select="${e => this._onColorSelected(e)}">
-        ${COLORS.map(c => html`
-          <paper-item>
-            <div class="color-preview" style$="background-color:${c.value}"></div>
-            ${c.id}
-          </paper-item>
-          `)}
+        ${this._renderDefaultColorOptions()}
         <paper-item disabled>
           <iron-icon class="color-preview" icon="help"></iron-icon>
           Custom
@@ -50,49 +45,8 @@ class NLGColorPicker extends LitElement {
 
     <paper-input class="fill" label="Fill" value="${fill}" on-value-changed="${e => this._onFillChanged(e)}"></paper-input>
 
-    <paper-input class="opacity" label="Opacity" value="${opacity}" type="Number" max="1" min="0" step="0.1" on-value-changed="${e => this._onOpacityChanged(e)}">
-    </paper-input>
+    <paper-input class="opacity" label="Opacity" value="${opacity}" type="Number" max="1" min="0" step="0.1" on-value-changed="${e => this._onOpacityChanged(e)}"></paper-input>
 `;
-  }
-
-  _onColorSelected(e) {
-    return this._setColor({
-      selected: e.target.selected,
-    });
-  }
-
-  _onFillChanged(e) {
-    return this._setColor({
-      fill: e.target.value,
-    });
-  }
-
-  _onOpacityChanged(e) {
-    return this._setColor({
-      opacity: e.target.value,
-    });
-  }
-
-  _setColor({
-    selected,
-    fill,
-    opacity,
-  }) {
-    if (selected && selected !== COLORS.length) {
-      this.fill = COLORS[selected].value;
-    }
-    if (fill) {
-      this.fill = fill;
-    }
-    if (opacity) {
-      this.opacity = opacity;
-    }
-    this.dispatchEvent(new CustomEvent('color-changed', {
-      detail: {
-        fill: this.fill,
-        opacity: this.opacity,
-      },
-    }));
   }
 
   static get properties() {
@@ -101,6 +55,48 @@ class NLGColorPicker extends LitElement {
       label: String,
       opacity: Number,
     };
+  }
+
+  _renderDefaultColorOptions() {
+    return COLORS.map(color => html`
+      <paper-item>
+        <div class="color-preview" style$="background-color:${color.value}"></div>
+        ${color.id}
+      </paper-item>
+    `);
+  }
+
+  _onColorSelected(e) {
+    if (e.target.selected === COLORS.length) {
+      return;
+    }
+    this.fill = COLORS[e.target.selected].value;
+    this._dispatchColorChangedEvent();
+  }
+
+  _onFillChanged(e) {
+    if (!e.target.value) {
+      return;
+    }
+    this.fill = e.target.value;
+    this._dispatchColorChangedEvent();
+  }
+
+  _onOpacityChanged(e) {
+    if (!e.target.value) {
+      return;
+    }
+    this.opacity = e.target.value;
+    this._dispatchColorChangedEvent();
+  }
+
+  _dispatchColorChangedEvent() {
+    this.dispatchEvent(new CustomEvent('color-changed', {
+      detail: {
+        fill: this.fill,
+        opacity: this.opacity,
+      },
+    }));
   }
 }
 window.customElements.define('nlg-color-picker', NLGColorPicker);

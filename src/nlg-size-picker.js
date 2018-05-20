@@ -1,8 +1,5 @@
 import { LitElement, html } from '@polymer/lit-element';
 
-const MIN = 1;
-const MAX = 8192;
-
 class NLGSizePicker extends LitElement {
   _render({ width, height }) {
     return html`
@@ -18,17 +15,17 @@ class NLGSizePicker extends LitElement {
       }
     </style>
 
-    <paper-input id="height" label="Height" value="${height}" type="Number" allowed-pattern="[0-9]" min="${MIN}" max="${MAX}" error-message="${MIN} to ${MAX} pixels"
-      on-value-changed="${e => this._setHeight(e)}" invalid="${height < MIN || height > MAX}">
-      <iron-icon slot="prefix" icon="unfold-more"></iron-icon>
+    <paper-input id="height" label="Height" value="${height}" type="Number" allowed-pattern="[0-9]" min="1"
+      on-value-changed="${e => this._setHeight(e)}" invalid="${height < 1}">
+      <span slot="prefix"></span>
       <div slot="suffix">px</div>
     </paper-input>
 
     <span>x</span>
 
-    <paper-input id="width" label="Width" value="${width}" type="Number" allowed-pattern="[0-9]" min="${MIN}" max="${MAX}" error-message="${MIN} to ${MAX} pixels"
-      on-value-changed="${e => this._setWidth(e)}" invalid="${width < MIN || width > MAX}">
-      <iron-icon slot="prefix" icon="code"></iron-icon>
+    <paper-input id="width" label="Width" value="${width}" type="Number" allowed-pattern="[0-9]" min="1"
+      on-value-changed="${e => this._setWidth(e)}" invalid="${width < 1}">
+      <span slot="prefix"></span>
       <div slot="suffix">px</div>
     </paper-input>
 `;
@@ -42,8 +39,6 @@ class NLGSizePicker extends LitElement {
     return {
       height: Number,
       width: Number,
-      // `svg-wrapper` can't download square images larger than 8836x8836 pixels
-      // 8192 is just prettier than 8836
     };
   }
 

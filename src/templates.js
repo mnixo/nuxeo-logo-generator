@@ -147,31 +147,28 @@ export const getSkeleton = (template, params) => {
   if (!template) {
     return '';
   }
-  const options = Object.assign({}, TEMPLATES[template]);
-  const {
-    width, height, viewBox, primaryFill, primaryOpacity,
-    secondaryFill, secondaryOpacity, backgroundFill, backgroundOpacity, geometry,
-  } = Object.assign(options, params);
+  const defaultParams = Object.assign({}, TEMPLATES[template]);
+  params = Object.assign(defaultParams, params);
   return `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${width}px" height="${height}px" viewBox="${viewBox}">
+    <svg xmlns="http://www.w3.org/2000/svg" width="${params.width}px" height="${params.height}px" viewBox="${params.viewBox}">
       <defs>
         <style>
           .primary {
-            fill: ${primaryFill};
-            opacity: ${primaryOpacity};
+            fill: ${params.primaryFill};
+            opacity: ${params.primaryOpacity};
           }
           .secondary {
-            fill: ${secondaryFill};
-            opacity: ${secondaryOpacity};
+            fill: ${params.secondaryFill};
+            opacity: ${params.secondaryOpacity};
           }
           .background {
-            fill: ${backgroundFill};
-            opacity: ${backgroundOpacity};
+            fill: ${params.backgroundFill};
+            opacity: ${params.backgroundOpacity};
           }
         </style>
       </defs>
       <rect class="background" width="100%" height="100%"/>
-      ${geometry}
+      ${params.geometry}
     </svg>
   `;
 };
