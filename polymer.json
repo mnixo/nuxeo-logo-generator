@@ -10,6 +10,7 @@
   "sources": [
     "img/*"
   ],
+  "autoBasePath": true,
   "builds": [
     {
       "name": "es6-bundled",

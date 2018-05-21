@@ -58,9 +58,11 @@ class NLGApp extends LitElement {
         width: fit-content;
       }
       div.show-alpha {
-        background-image: url('../../img/alpha_layer.png');
+        background-image: url('img/alpha_layer.png');
         background-size: 20px 20px;
-        image-rendering: pixelated;
+        image-rendering: pixelated; /* Chrome and Safari */
+        image-rendering: -moz-crisp-edges; /* Firefox */
+        -webkit-filter: blur(0px); /* Safari */
       }
       div.svg-wrapper-container {
         border: dashed rgba(0, 0, 0, 0.5) 1px;
