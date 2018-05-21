@@ -7,6 +7,9 @@
     "node_modules/@webcomponents/webcomponentsjs/bundles/*.js",
     "node_modules/web-animations-js/web-animations-next-lite.min.js"
   ],
+  "sources": [
+    "img/*"
+  ],
   "builds": [
     {
       "name": "es6-bundled",

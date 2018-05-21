@@ -58,7 +58,7 @@ class NLGApp extends LitElement {
         width: fit-content;
       }
       div.show-alpha {
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gUQFToDqewmngAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAGUlEQVQIHQEOAPH/Aebm5tzc3ALc3NwkJCRFcghK/x9NRAAAAABJRU5ErkJggg==');
+        background-image: url('../../img/alpha_layer.png');
         background-size: 20px 20px;
         image-rendering: pixelated;
       }
