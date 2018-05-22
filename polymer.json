@@ -8,7 +8,8 @@
     "node_modules/web-animations-js/web-animations-next-lite.min.js"
   ],
   "sources": [
-    "img/*"
+    "img/*",
+    "manifest.json"
   ],
   "autoBasePath": true,
   "builds": [
