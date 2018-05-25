@@ -13,9 +13,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/nuxeo-logo-generator/",
+  "start_url": "/keendoo-logo-generator/",
   "background_color": "#0066FF",
   "display": "standalone",
-  "scope": "/nuxeo-logo-generator/",
+  "scope": "/keendoo-logo-generator/",
   "theme_color": "#0066FF"
 }
