@@ -1,6 +1,6 @@
 # Keendoo Logo Generator
 
-[![Build Status](https://travis-ci.org/mnixo/nuxeo-logo-generator.svg?branch=master)](https://travis-ci.org/mnixo/nuxeo-logo-generator)
+[![Build Status](https://travis-ci.org/nicolaschaillot/keendoo-logo-generator.svg?branch=master)](https://travis-ci.org/nicolaschaillot/keendoo-logo-generator)
 
 Keendoo Logo Generator is a small web application that simplifies the process of creating Keendoo logos.
 
@@ -19,8 +19,3 @@ Keendoo Logo Generator is a small web application that simplifies the process of
 All the SVG logo templates and default colors are compliant with the Nuxeo branding guidelines.
 
 The resulting file format for the logo is PNG.
-
-### Under the (small) hood
-
-Nuxeo Logo Generator started as a simple [Polymer 2](https://www.polymer-project.org/2.0/start/) application.
-As a candidate for exploratory research, it evolved into a [Polymer 3](https://www.polymer-project.org/3.0/start/) app, using the very new and unreleased [LitElement](https://github.com/Polymer/lit-element) base class.
