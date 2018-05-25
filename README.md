@@ -1,12 +1,12 @@
-# Nuxeo Logo Generator
+# Keendoo Logo Generator
 
 [![Build Status](https://travis-ci.org/mnixo/nuxeo-logo-generator.svg?branch=master)](https://travis-ci.org/mnixo/nuxeo-logo-generator)
 
-Nuxeo Logo Generator is a small web application that simplifies the process of creating Nuxeo logos.
+Keendoo Logo Generator is a small web application that simplifies the process of creating Keendoo logos.
 
 ### How do I create some logos?
 
-[Try it here!](https://mnixo.github.io/nuxeo-logo-generator/) 
+[Try it here!](https://nicolaschaillot.github.io/keendoo-logo-generator/) 
 
 ### Parameters
 
