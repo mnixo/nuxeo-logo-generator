@@ -16,6 +16,6 @@ Keendoo Logo Generator is a small web application that simplifies the process of
   - Value: color code (CSS valid).
   - Opacity: alpha value of the color (0 to 1).
 
-All the SVG logo templates and default colors are compliant with the Nuxeo branding guidelines.
+All the SVG logo templates and default colors are compliant with the Keendoo branding guidelines.
 
 The resulting file format for the logo is PNG.

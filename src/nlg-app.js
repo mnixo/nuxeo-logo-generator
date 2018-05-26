@@ -18,7 +18,7 @@ window.devicePixelRatio = 1;
 
 class NLGApp extends LitElement {
   _render({
-    template, width, height, primaryFill, primaryOpacity, secondaryFill, secondaryOpacity,
+    template, width, height, primaryFill, primaryOpacity, secondaryFill, secondaryOpacity, tertiaryFill, tertiaryOpacity,
     backgroundFill, backgroundOpacity, _showAlphaLayer,
   }) {
     const content = getSkeleton(template, {
@@ -28,6 +28,8 @@ class NLGApp extends LitElement {
       primaryOpacity,
       secondaryFill,
       secondaryOpacity,
+      tertiaryFill,
+      tertiaryOpacity,
       backgroundFill,
       backgroundOpacity,
     });
@@ -80,6 +82,7 @@ class NLGApp extends LitElement {
 
     ${this._drawColorPicker('Primary', primaryFill, primaryOpacity, this._onPrimaryChanged.bind(this))}
     ${this._drawColorPicker('Secondary', secondaryFill, secondaryOpacity, this._onSecondaryChanged.bind(this))}
+    ${this._drawColorPicker('Tertiary', tertiaryFill, tertiaryOpacity, this._onTertiaryChanged.bind(this))}
     ${this._drawColorPicker('Background', backgroundFill, backgroundOpacity, this._onBackgroundChanged.bind(this))}  
 
     <paper-checkbox class="show-alpha" checked="${_showAlphaLayer}" on-change="${e => this._onShowLayerChanged(e)}">Show opacity (alpha layer) in the preview</paper-checkbox>
@@ -99,6 +102,8 @@ class NLGApp extends LitElement {
       primaryOpacity: Number,
       secondaryFill: String,
       secondaryOpacity: Number,
+      tertiaryFill: String,
+      tertiaryOpacity: Number,
       backgroundFill: String,
       backgroundOpacity: Number,
       template: String,
@@ -127,6 +132,8 @@ class NLGApp extends LitElement {
     this.primaryOpacity = template.primaryOpacity;
     this.secondaryFill = template.secondaryFill;
     this.secondaryOpacity = template.secondaryOpacity;
+    this.tertiaryFill = template.tertiaryFill;
+    this.tertiaryOpacity = template.tertiaryOpacity;
     this.backgroundFill = template.backgroundFill;
     this.backgroundOpacity = template.backgroundOpacity;
   }
@@ -151,6 +158,11 @@ class NLGApp extends LitElement {
   _onSecondaryChanged(e) {
     this._set('secondaryFill', e.detail.fill);
     this._set('secondaryOpacity', e.detail.opacity);
+  }
+
+  _onTertiaryChanged(e) {
+    this._set('tertiaryFill', e.detail.fill);
+    this._set('tertiaryOpacity', e.detail.opacity);
   }
 
   _onBackgroundChanged(e) {
