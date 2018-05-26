@@ -18,7 +18,8 @@ window.devicePixelRatio = 1;
 
 class NLGApp extends LitElement {
   _render({
-    template, width, height, primaryFill, primaryOpacity, secondaryFill, secondaryOpacity, tertiaryFill, tertiaryOpacity,
+    template, width, height,
+    primaryFill, primaryOpacity, secondaryFill, secondaryOpacity, tertiaryFill, tertiaryOpacity,
     backgroundFill, backgroundOpacity, _showAlphaLayer,
   }) {
     const content = getSkeleton(template, {
