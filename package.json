@@ -1,8 +1,8 @@
 {
-  "description": "Nuxeo Logo Generator",
-  "repository": "mnixo/nuxeo-logo-generator",
-  "homepage": "https://mnixo.github.io/nuxeo-logo-generator",
-  "name": "nuxeo-logo-generator",
+  "description": "Keendoo Logo Generator",
+  "repository": "nicolaschaillot/keendoo-logo-generator",
+  "homepage": "https://nicolaschaillot.github.io/keendoo-logo-generator",
+  "name": "keendoo-logo-generator",
   "version": "1.0.0",
   "flat": true,
   "scripts": {
@@ -11,7 +11,7 @@
     "build": "./node_modules/polymer-cli/bin/polymer.js build",
     "eslint": "./node_modules/eslint/bin/eslint.js src"
   },
-  "author": "Miguel Nixo <mnixo@nuxeo.com>",
+  "author": "Nicolas Chaillot <nicolas.chaillot@keendoo.com>",
   "license": "MIT",
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.0.0",
