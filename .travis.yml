@@ -2,19 +2,21 @@ language: node_js
 node_js: '8'
 cache:
   directories:
-    - node_modules
+  - node_modules
 install:
-  - npm install -g
-  - npm install
+- npm install -g
+- npm install
 before_script:
-  - npm run lint
-  - npm run eslint
+- npm run lint
+- npm run eslint
 script: npm run build
 deploy:
   local-dir: build/es6-bundled
   provider: pages
   skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  'on':
+  github-token: "$GITHUB_TOKEN"
+  on:
     branch: master
-
+env:
+  global:
+    secure: SVY+EHqcroO1wt9V65F3Ttyd2COGXhdE/8Gj8rwJ4OCKWpqT4U6tjooJyi8sWfX/8Rd/O+qe+6hW47e1hPrBAl1R4xthVcmj/zvbT8v4ScRcvVrZ7pO7+YPSIv/DYtdgDYPeVrVsmQCd1vJ7/LTnVCf0PitZ4wzZaZMxRM59gE888pG6kHYeYMt/NVbhyGA3BjpqisWhgWDz0a2Dxs/l6UqH6z1fm4cU7RGD+S9XCya/C3wGZFdQcrCVOP4PHmG3ybDJoxIcZHzWN9qL5Pbdq2fh6xUQ9IuG4Tei2QxHQWzIEBUUFnNO4RP0EPl0S5M5eb1696MZNwPsv9jfLG7bf+8umawoppPXwr5uADV07/Ugo2uHGZk6cGPC4nrFHaFMocf2myUWc6wfm+J95QQqBM40ONwvUnzLG0FXsve5RMK+OjVrpuJVFxZMELcOR6Gpu4dflEmx/kudFsiCNGyQAWXxA0ryopDHyu/UpdCgh5BznCAA3AdVb9WqVO6sXLBghWxP6ElhUKZ6jujwdK4X4uMn15LcoTjaTtmGfK6yraOYGbift7DxoHrQv/C19NtksvTVoeLdNANWeKgjMidIG54pwoTK6sGsVwlaDyVtNdKTkaeVFAEILZ3tepRQyasnBT0wIUyjpLRpx6/AcVDUTcN8nAqUYUM8hI5HD3o1Wxw=
