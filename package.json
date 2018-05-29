@@ -7,9 +7,9 @@
   "flat": true,
   "scripts": {
     "start": "./node_modules/polymer-cli/bin/polymer.js serve",
-    "lint": "./node_modules/polymer-cli/bin/polymer.js lint",
-    "build": "./node_modules/polymer-cli/bin/polymer.js build",
-    "eslint": "./node_modules/eslint/bin/eslint.js src"
+    "lint": "./node_modules/polymer-cli/bin/polymer.js lint -i src",
+    "eslint": "./node_modules/eslint/bin/eslint.js gulpfile.js src",
+    "build": "./node_modules/polymer-cli/bin/polymer.js build && ./node_modules/gulp/bin/gulp.js add-analytics"
   },
   "author": "Miguel Nixo <mnixo@nuxeo.com>",
   "license": "MIT",
@@ -17,6 +17,8 @@
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "eslint": "^4.19.1",
     "eslint-plugin-polymer": "^0.2.1",
+    "gulp": "^3.9.1",
+    "gulp-replace": "^1.0.0",
     "polymer-cli": "^1.7.2"
   },
   "resolutions": {

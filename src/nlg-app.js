@@ -11,6 +11,7 @@ import '@polymer/paper-listbox/paper-listbox.js';
 import '@polymer/paper-styles/paper-styles.js';
 import './nlg-color-picker.js';
 import './nlg-size-picker.js';
+import { sendEvent } from './analytics';
 import { TEMPLATES, getSkeleton } from './templates.js';
 import { renderSVG } from './svg-renderer.js';
 
@@ -168,6 +169,17 @@ class NLGApp extends LitElement {
       link.setAttribute('hidden', true);
       link.download = `${this.template}-${this.height}x${this.width}`;
       link.href = url;
+      sendEvent('download', {
+        'template': this.template,
+        'height': this.height,
+        'width': this.width,
+        'primaryFill': this.primaryFill,
+        'primaryOpacity': this.primaryOpacity,
+        'secondaryFill': this.secondaryFill,
+        'secondaryOpacity': this.secondaryOpacity,
+        'backgroundFill': this.backgroundFill,
+        'backgroundOpacity': this.backgroundOpacity,
+      });
       link.click();
     });
   }
