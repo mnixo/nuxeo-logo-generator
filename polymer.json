@@ -9,6 +9,7 @@
   ],
   "sources": [
     "img/*",
+    "analytics.html",
     "manifest.json"
   ],
   "autoBasePath": true,
