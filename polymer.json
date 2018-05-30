@@ -10,7 +10,8 @@
   "sources": [
     "img/*",
     "analytics.html",
-    "manifest.json"
+    "manifest.json",
+    "service-worker.js"
   ],
   "autoBasePath": true,
   "builds": [

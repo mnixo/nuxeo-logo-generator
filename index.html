@@ -8,6 +8,11 @@
   <meta property="twitter:image" content="https://github.com/mnixo/nuxeo-logo-generator/raw/master/img/icon-192.png">
   <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
   <link rel="manifest" href="manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
   <link id="analytics">
   <script src="node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
   <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
