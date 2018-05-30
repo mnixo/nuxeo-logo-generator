@@ -11,6 +11,7 @@
     "img/*",
     "analytics.html",
     "manifest.json",
+    "service-worker.html",
     "service-worker.js"
   ],
   "autoBasePath": true,
