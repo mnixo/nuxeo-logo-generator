@@ -1,8 +1,10 @@
 export const TEMPLATES = {
   'Avatar-01': {
     'viewBox': `0 0 225 225`,
-    'width': 250,
-    'height': 250,
+    'size': {
+      width: 250,
+      height: 250,
+    },
     'primaryFill': '#0066FF',
     'primaryOpacity': 1.0,
     'backgroundFill': '#FFFFFF',
@@ -13,8 +15,10 @@ export const TEMPLATES = {
   },
   'Avatar-02': {
     'viewBox': `0 0 16 16`,
-    'width': 250,
-    'height': 250,
+    'size': {
+      width: 250,
+      height: 250,
+    },
     'primaryFill': '#FFFFFF',
     'primaryOpacity': 1.0,
     'secondaryFill': '#1F28BF',
@@ -34,8 +38,10 @@ export const TEMPLATES = {
   },
   'Avatar-03': {
     'viewBox': `0 0 16 16`,
-    'width': 250,
-    'height': 250,
+    'size': {
+      width: 250,
+      height: 250,
+    },
     'primaryFill': '#0066FF',
     'primaryOpacity': 1.0,
     'secondaryFill': '#73D2CF',
@@ -55,8 +61,10 @@ export const TEMPLATES = {
   },
   'NUXEO-LOGO-1': {
     'viewBox': `0 0 362.98 68.06`,
-    'width': 533,
-    'height': 100,
+    'size': {
+      width: 533,
+      height: 100,
+    },
     'primaryFill': '#1F28BF',
     'primaryOpacity': 1.0,
     'secondaryFill': '#0066FF',
@@ -73,8 +81,10 @@ export const TEMPLATES = {
   },
   'NUXEO-LOGO-3': {
     'viewBox': `0 0 215.52 214.28`,
-    'width': 250,
-    'height': 250,
+    'size': {
+      width: 250,
+      height: 250,
+    },
     'primaryFill': '#1F28BF',
     'primaryOpacity': 1.0,
     'secondaryFill': '#0066FF',
@@ -94,8 +104,10 @@ export const TEMPLATES = {
   },
   'NUXEO-LOGO-3-BL': {
     'viewBox': `0 0 215.52 214.28`,
-    'width': 250,
-    'height': 250,
+    'size': {
+      width: 250,
+      height: 250,
+    },
     'primaryFill': '#1F28BF',
     'primaryOpacity': 1.0,
     'secondaryFill': '#0066FF',
@@ -112,8 +124,10 @@ export const TEMPLATES = {
   },
   'NUXEO-LOGO-3-TR': {
     'viewBox': `0 0 215.52 214.28`,
-    'width': 250,
-    'height': 250,
+    'size': {
+      width: 250,
+      height: 250,
+    },
     'primaryFill': '#1F28BF',
     'primaryOpacity': 1.0,
     'secondaryFill': '#0066FF',
@@ -130,8 +144,10 @@ export const TEMPLATES = {
   },
   'NUXEO-X': {
     'viewBox': `0 0 450 450`,
-    'width': 250,
-    'height': 250,
+    'size': {
+      width: 250,
+      height: 250,
+    },
     'primaryFill': '#0066FF',
     'primaryOpacity': 1.0,
     'backgroundFill': '#FFFFFF',
@@ -143,14 +159,14 @@ export const TEMPLATES = {
 };
 
 
-export const getSkeleton = (template, params) => {
-  if (!template) {
+export const getSkeleton = (template, size, params) => {
+  if (!template || !size) {
     return '';
   }
-  const defaultParams = Object.assign({}, TEMPLATES[template]);
-  params = Object.assign(defaultParams, params);
+  const viewBox = TEMPLATES[template].viewBox;
+  const geometry = TEMPLATES[template].geometry;
   return `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${params.width}px" height="${params.height}px" viewBox="${params.viewBox}">
+    <svg xmlns="http://www.w3.org/2000/svg" width="${size.width}px" height="${size.height}px" viewBox="${viewBox}">
       <defs>
         <style>
           .primary {
@@ -168,7 +184,7 @@ export const getSkeleton = (template, params) => {
         </style>
       </defs>
       <rect class="background" width="100%" height="100%"/>
-      ${params.geometry}
+      ${geometry}
     </svg>
   `;
 };
