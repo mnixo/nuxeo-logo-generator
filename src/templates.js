@@ -1,31 +1,55 @@
 export const TEMPLATES = {
   'Avatar-01': {
-    'viewBox': `0 0 225 225`,
-    'size': {
+    viewBox: `0 0 225 225`,
+    size: {
       width: 250,
       height: 250,
     },
-    'primaryFill': '#0066FF',
-    'primaryOpacity': 1.0,
-    'backgroundFill': '#FFFFFF',
-    'backgroundOpacity': 0.0,
-    'geometry': `
+    colors: [
+      {
+        id: 'primary',
+        label: 'Primary',
+        fill: '#0066FF',
+        opacity: 1.0,
+      },
+      {
+        id: 'background',
+        label: 'Background',
+        fill: '#FFFFFF',
+        opacity: 0.0,
+      },
+    ],
+    geometry: `
       <polygon class="primary" points="32.25 32.25 32.25 64.85 79.9 112.5 32.25 160.15 32.25 192.75 64.85 192.75 112.5 145.1 160.15 192.75 192.75 192.75 192.75 160.15 145.1 112.5 192.75 64.85 192.75 32.25 160.15 32.25 112.5 79.9 64.85 32.25 32.25 32.25"/>
     `,
   },
   'Avatar-02': {
-    'viewBox': `0 0 16 16`,
-    'size': {
+    viewBox: `0 0 16 16`,
+    size: {
       width: 250,
       height: 250,
     },
-    'primaryFill': '#FFFFFF',
-    'primaryOpacity': 1.0,
-    'secondaryFill': '#1F28BF',
-    'secondaryOpacity': 1.0,
-    'backgroundFill': '#FFFFFF',
-    'backgroundOpacity': 0.0,
-    'geometry': `
+    colors: [
+      {
+        id: 'primary',
+        label: 'Primary',
+        fill: '#FFFFFF',
+        opacity: 1.0,
+      },
+      {
+        id: 'secondary',
+        label: 'Secondary',
+        fill: '#1F28BF',
+        opacity: 1.0,
+      },
+      {
+        id: 'background',
+        label: 'Background',
+        fill: '#FFFFFF',
+        opacity: 0.0,
+      },
+    ],
+    geometry: `
       <defs>
         <mask id="mask">
           <rect fill="white" width="100%" height="100%"/>
@@ -37,18 +61,32 @@ export const TEMPLATES = {
     `,
   },
   'Avatar-03': {
-    'viewBox': `0 0 16 16`,
-    'size': {
+    viewBox: `0 0 16 16`,
+    size: {
       width: 250,
       height: 250,
     },
-    'primaryFill': '#0066FF',
-    'primaryOpacity': 1.0,
-    'secondaryFill': '#73D2CF',
-    'secondaryOpacity': 1.0,
-    'backgroundFill': '#FFFFFF',
-    'backgroundOpacity': 0.0,
-    'geometry': `
+    colors: [
+      {
+        id: 'primary',
+        label: 'Primary',
+        fill: '#0066FF',
+        opacity: 1.0,
+      },
+      {
+        id: 'secondary',
+        label: 'Secondary',
+        fill: '#73D2CF',
+        opacity: 1.0,
+      },
+      {
+        id: 'background',
+        label: 'Background',
+        fill: '#FFFFFF',
+        opacity: 0.0,
+      },
+    ],
+    geometry: `
       <defs>
         <mask id="mask">
           <rect fill="white" width="100%" height="100%"/>
@@ -60,18 +98,32 @@ export const TEMPLATES = {
     `,
   },
   'NUXEO-LOGO-1': {
-    'viewBox': `0 0 362.98 68.06`,
-    'size': {
+    viewBox: `0 0 362.98 68.06`,
+    size: {
       width: 533,
       height: 100,
     },
-    'primaryFill': '#1F28BF',
-    'primaryOpacity': 1.0,
-    'secondaryFill': '#0066FF',
-    'secondaryOpacity': 1.0,
-    'backgroundFill': '#FFFFFF',
-    'backgroundOpacity': 0.0,
-    'geometry': `
+    colors: [
+      {
+        id: 'primary',
+        label: 'Primary',
+        fill: '#1F28BF',
+        opacity: 1.0,
+      },
+      {
+        id: 'secondary',
+        label: 'Secondary',
+        fill: '#0066FF',
+        opacity: 1.0,
+      },
+      {
+        id: 'background',
+        label: 'Background',
+        fill: '#FFFFFF',
+        opacity: 0.0,
+      },
+    ],
+    geometry: `
       <polygon class="primary" points="147.46 0 147.46 13.82 167.67 34.03 147.46 54.23 147.46 68.06 161.29 68.06 181.49 47.85 201.7 68.06 215.52 68.06 215.52 54.23 195.32 34.03 215.52 13.82 215.52 0 201.7 0 181.49 20.2 161.29 0 147.46 0"/>
       <polygon class="secondary" points="124.78 0 124.78 51.75 90.75 51.75 90.75 0 73.73 0 73.73 51.05 90.75 68.06 141.79 68.06 141.79 0 124.78 0"/>
       <polygon class="secondary" points="51.05 0 0 0 0 68.06 17.02 68.06 17.02 16.31 51.05 16.31 51.05 68.06 68.06 68.06 68.06 17.02 51.05 0"/>
@@ -80,18 +132,32 @@ export const TEMPLATES = {
     `,
   },
   'NUXEO-LOGO-3': {
-    'viewBox': `0 0 215.52 214.28`,
-    'size': {
+    viewBox: `0 0 215.52 214.28`,
+    size: {
       width: 250,
       height: 250,
     },
-    'primaryFill': '#1F28BF',
-    'primaryOpacity': 1.0,
-    'secondaryFill': '#0066FF',
-    'secondaryOpacity': 1.0,
-    'backgroundFill': '#FFFFFF',
-    'backgroundOpacity': 0.0,
-    'geometry': `
+    colors: [
+      {
+        id: 'primary',
+        label: 'Primary',
+        fill: '#1F28BF',
+        opacity: 1.0,
+      },
+      {
+        id: 'secondary',
+        label: 'Secondary',
+        fill: '#0066FF',
+        opacity: 1.0,
+      },
+      {
+        id: 'background',
+        label: 'Background',
+        fill: '#FFFFFF',
+        opacity: 0.0,
+      },
+    ],
+    geometry: `
       <polygon class="primary" points="0 146.22 0 160.04 20.2 180.25 0 200.45 0 214.28 13.82 214.28 34.03 194.07 54.23 214.28 68.06 214.28 68.06 200.45 47.85 180.25 68.06 160.04 68.06 146.22 54.23 146.22 34.03 166.42 13.82 146.22 0 146.22"/>
       <polygon class="primary" points="147.46 0 147.46 13.82 167.67 34.03 147.46 54.23 147.46 68.06 161.29 68.06 181.49 47.85 201.7 68.06 215.52 68.06 215.52 54.23 195.32 34.03 215.52 13.82 215.52 0 201.7 0 181.49 20.2 161.29 0 147.46 0"/>
       <polygon class="secondary" points="51.05 73.26 51.05 125.02 17.02 125.02 17.02 73.26 0 73.26 0 124.31 17.02 141.32 68.06 141.32 68.06 73.26 51.05 73.26"/>
@@ -103,18 +169,32 @@ export const TEMPLATES = {
     `,
   },
   'NUXEO-LOGO-3-BL': {
-    'viewBox': `0 0 215.52 214.28`,
-    'size': {
+    viewBox: `0 0 215.52 214.28`,
+    size: {
       width: 250,
       height: 250,
     },
-    'primaryFill': '#1F28BF',
-    'primaryOpacity': 1.0,
-    'secondaryFill': '#0066FF',
-    'secondaryOpacity': 1.0,
-    'backgroundFill': '#FFFFFF',
-    'backgroundOpacity': 0.0,
-    'geometry': `
+    colors: [
+      {
+        id: 'primary',
+        label: 'Primary',
+        fill: '#1F28BF',
+        opacity: 1.0,
+      },
+      {
+        id: 'secondary',
+        label: 'Secondary',
+        fill: '#0066FF',
+        opacity: 1.0,
+      },
+      {
+        id: 'background',
+        label: 'Background',
+        fill: '#FFFFFF',
+        opacity: 0.0,
+      },
+    ],
+    geometry: `
       <polygon class="primary" points="0 146.22 0 160.04 20.2 180.25 0 200.45 0 214.28 13.82 214.28 34.03 194.07 54.23 214.28 68.06 214.28 68.06 200.45 47.85 180.25 68.06 160.04 68.06 146.22 54.23 146.22 34.03 166.42 13.82 146.22 0 146.22"/>
       <polygon class="secondary" points="51.05 73.26 51.05 125.02 17.02 125.02 17.02 73.26 0 73.26 0 124.31 17.02 141.32 68.06 141.32 68.06 73.26 51.05 73.26"/>
       <polygon class="secondary" points="51.05 0 0 0 0 68.06 17.02 68.06 17.02 16.31 51.05 16.31 51.05 68.06 68.06 68.06 68.06 17.02 51.05 0"/>
@@ -123,18 +203,32 @@ export const TEMPLATES = {
     `,
   },
   'NUXEO-LOGO-3-TR': {
-    'viewBox': `0 0 215.52 214.28`,
-    'size': {
+    viewBox: `0 0 215.52 214.28`,
+    size: {
       width: 250,
       height: 250,
     },
-    'primaryFill': '#1F28BF',
-    'primaryOpacity': 1.0,
-    'secondaryFill': '#0066FF',
-    'secondaryOpacity': 1.0,
-    'backgroundFill': '#FFFFFF',
-    'backgroundOpacity': 0.0,
-    'geometry': `
+    colors: [
+      {
+        id: 'primary',
+        label: 'Primary',
+        fill: '#1F28BF',
+        opacity: 1.0,
+      },
+      {
+        id: 'secondary',
+        label: 'Secondary',
+        fill: '#0066FF',
+        opacity: 1.0,
+      },
+      {
+        id: 'background',
+        label: 'Background',
+        fill: '#FFFFFF',
+        opacity: 0.0,
+      },
+    ],
+    geometry: `
       <polygon class="primary" points="147.46 0 147.46 13.82 167.67 34.03 147.46 54.23 147.46 68.06 161.29 68.06 181.49 47.85 201.7 68.06 215.52 68.06 215.52 54.23 195.32 34.03 215.52 13.82 215.52 0 201.7 0 181.49 20.2 161.29 0 147.46 0"/>
       <polygon class="secondary" points="124.78 0 124.78 51.75 90.75 51.75 90.75 0 73.73 0 73.73 51.05 90.75 68.06 141.79 68.06 141.79 0 124.78 0"/>
       <polygon class="secondary" points="51.05 0 0 0 0 68.06 17.02 68.06 17.02 16.31 51.05 16.31 51.05 68.06 68.06 68.06 68.06 17.02 51.05 0"/>
@@ -143,45 +237,51 @@ export const TEMPLATES = {
     `,
   },
   'NUXEO-X': {
-    'viewBox': `0 0 450 450`,
-    'size': {
+    viewBox: `0 0 450 450`,
+    size: {
       width: 250,
       height: 250,
     },
-    'primaryFill': '#0066FF',
-    'primaryOpacity': 1.0,
-    'backgroundFill': '#FFFFFF',
-    'backgroundOpacity': 0.0,
-    'geometry': `
+    colors: [
+      {
+        id: 'primary',
+        label: 'Primary',
+        fill: '#0066FF',
+        opacity: 1.0,
+      },
+      {
+        id: 'background',
+        label: 'Background',
+        fill: '#FFFFFF',
+        opacity: 0.0,
+      },
+    ],
+    geometry: `
       <polygon class="primary" points="113.08 112.62 113.08 158.27 179.84 225.03 113.08 291.76 113.08 337.44 158.76 337.44 225.49 270.68 292.25 337.44 337.9 337.44 337.9 291.76 271.17 225.03 337.9 158.27 337.9 112.62 292.25 112.62 225.49 179.35 158.76 112.62 113.08 112.62"/>
     `,
   },
 };
 
 
-export const getSkeleton = (template, size, params) => {
+export const getSkeleton = (template, size, colors) => {
   if (!template || !size) {
     return '';
   }
   const viewBox = TEMPLATES[template].viewBox;
   const geometry = TEMPLATES[template].geometry;
+  let styles = '';
+  colors.forEach(color => {
+    styles += `
+      .${color.id} {
+        fill: ${color.fill};
+        opacity: ${color.opacity};
+      }
+    `;
+  });
   return `
     <svg xmlns="http://www.w3.org/2000/svg" width="${size.width}px" height="${size.height}px" viewBox="${viewBox}">
       <defs>
-        <style>
-          .primary {
-            fill: ${params.primaryFill};
-            opacity: ${params.primaryOpacity};
-          }
-          .secondary {
-            fill: ${params.secondaryFill};
-            opacity: ${params.secondaryOpacity};
-          }
-          .background {
-            fill: ${params.backgroundFill};
-            opacity: ${params.backgroundOpacity};
-          }
-        </style>
+        <style>${styles}</style>
       </defs>
       <rect class="background" width="100%" height="100%"/>
       ${geometry}
