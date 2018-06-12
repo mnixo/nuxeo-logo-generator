@@ -21,13 +21,8 @@ class NLGApp extends LitElement {
   static get properties() {
     return {
       _size: Object,
-      primaryFill: String,
-      primaryOpacity: Number,
-      secondaryFill: String,
-      secondaryOpacity: Number,
-      backgroundFill: String,
-      backgroundOpacity: Number,
-      template: String,
+      _colors: Array,
+      _template: String,
       _showAlphaLayer: Boolean,
     };
   }
@@ -38,21 +33,11 @@ class NLGApp extends LitElement {
       width: 0,
       height: 0,
     };
+    this._colors = [];
   }
 
-  _render({
-    template, _size, primaryFill, primaryOpacity, secondaryFill, secondaryOpacity,
-    backgroundFill, backgroundOpacity, _showAlphaLayer,
-  }) {
-    const content = getSkeleton(template, _size, {
-      primaryFill,
-      primaryOpacity,
-      secondaryFill,
-      secondaryOpacity,
-      backgroundFill,
-      backgroundOpacity,
-    });
-
+  _render({ _template, _size, _colors, _showAlphaLayer }) {
+    const content = getSkeleton(_template, _size, _colors);
     return html`
       <style>
         :host {
@@ -91,7 +76,8 @@ class NLGApp extends LitElement {
         }
       </style>
   
-      <paper-dropdown-menu class="template-picker" label="Logo Template" on-iron-select="${e => this._onTemplateSelected(e)}">
+      <paper-dropdown-menu class="template-picker" label="Logo Template"
+        on-iron-select="${this._onTemplateSelected.bind(this)}">
         <paper-listbox slot="dropdown-content" selected="0">
           ${this._drawTemplateOptions()}
         </paper-listbox>
@@ -99,20 +85,21 @@ class NLGApp extends LitElement {
   
       <nlg-size-picker size="${_size}" on-size-changed="${e => this._onSizeChanged(e)}"></nlg-size-picker>
   
-      ${this._drawColorPicker('Primary', primaryFill, primaryOpacity, this._onPrimaryChanged.bind(this))}
-      ${this._drawColorPicker('Secondary', secondaryFill, secondaryOpacity, this._onSecondaryChanged.bind(this))}
-      ${this._drawColorPicker('Background', backgroundFill, backgroundOpacity, this._onBackgroundChanged.bind(this))}  
+      ${this._drawColorPickers(_colors)}  
   
-      <paper-checkbox class="show-alpha" checked="${_showAlphaLayer}" on-change="${e => this._onShowLayerChanged(e)}">Show opacity (alpha layer) in the preview</paper-checkbox>
+      <paper-checkbox class="show-alpha" checked="${_showAlphaLayer}"
+        on-change="${this._onShowLayerChanged.bind(this)}">
+        Show opacity (alpha layer) in the preview
+      </paper-checkbox>
   
-      ${this._drawPreview(_size, _showAlphaLayer, content)}
+      ${this._drawPreview(_template, _size, _colors, _showAlphaLayer, content)}
     `;
   }
 
-  _drawColorPicker(label, fill, opacity, onChanged) {
-    return !fill ? null : html`
-      <nlg-color-picker label="${label}" fill="${fill}" opacity="${opacity}" on-color-changed="${e => onChanged(e)}"></nlg-color-picker>
-    `;
+  _drawColorPickers(colors) {
+    return colors.map(color => html`
+      <nlg-color-picker color="${color}" on-color-changed="${this._onColorChanged.bind(this)}"></nlg-color-picker>
+    `);
   }
 
   _drawTemplateOptions() {
@@ -121,8 +108,8 @@ class NLGApp extends LitElement {
     `);
   }
 
-  _drawPreview(size, showAlphaLayer, content) {
-    if (!this._isSizeValid(size)) {
+  _drawPreview(template, size, colors, showAlphaLayer, content) {
+    if (!this._validateSize(size) || !this._validateColors(template, colors)) {
       return;
     }
     return html`
@@ -133,68 +120,51 @@ class NLGApp extends LitElement {
     `;
   }
 
-  _isSizeValid(size) {
+  _validateSize(size) {
     return size && size.width && size.width > 0 && size.height && size.height > 0;
   }
 
+  _validateColor(template, color) {
+    return color.fill && !isNaN(color.opacity);
+  }
+
+  _validateColors(template, colors) {
+    const hasInvalidColor = colors.find(color => !this._validateColor(template, color));
+    return !hasInvalidColor;
+  }
+
   _onTemplateSelected(e) {
-    this.template = e.detail.item.id;
-    const template = TEMPLATES[this.template];
+    this._template = e.detail.item.id;
+    const template = TEMPLATES[this._template];
     this._size = Object.assign({}, template.size);
-    this.primaryFill = template.primaryFill;
-    this.primaryOpacity = template.primaryOpacity;
-    this.secondaryFill = template.secondaryFill;
-    this.secondaryOpacity = template.secondaryOpacity;
-    this.backgroundFill = template.backgroundFill;
-    this.backgroundOpacity = template.backgroundOpacity;
+    this._colors = template.colors.slice();
   }
 
   _onSizeChanged(e) {
     this._size = e.detail.size;
   }
 
-  _onPrimaryChanged(e) {
-    this._set('primaryFill', e.detail.fill);
-    this._set('primaryOpacity', e.detail.opacity);
-  }
-
-  _onSecondaryChanged(e) {
-    this._set('secondaryFill', e.detail.fill);
-    this._set('secondaryOpacity', e.detail.opacity);
-  }
-
-  _onBackgroundChanged(e) {
-    this._set('backgroundFill', e.detail.fill);
-    this._set('backgroundOpacity', e.detail.opacity);
+  _onColorChanged(e) {
+    const changedColor = Object.assign({}, e.detail.color);
+    this._colors = this._colors.map(color => {
+      return color.id === changedColor.id ? changedColor : color;
+    });
   }
 
   _onShowLayerChanged(e) {
     this._showAlphaLayer = e.target.checked;
   }
 
-  _set(propertyName, value) {
-    if (value) {
-      this[propertyName] = value;
-    }
-    return this[propertyName];
-  }
-
   _download(svg) {
     renderSVG(svg).then(url => {
       const link = document.createElement('a');
       link.setAttribute('hidden', true);
-      link.download = `${this.template}-${this._size.height}x${this._size.width}`;
+      link.download = `${this._template}-${this._size.height}x${this._size.width}`;
       link.href = url;
       sendEvent('download', {
-        'template': this.template,
+        'template': this._template,
         'height': this._size.height,
         'width': this._size.width,
-        'primaryFill': this.primaryFill,
-        'primaryOpacity': this.primaryOpacity,
-        'secondaryFill': this.secondaryFill,
-        'secondaryOpacity': this.secondaryOpacity,
-        'backgroundFill': this.backgroundFill,
-        'backgroundOpacity': this.backgroundOpacity,
       });
       link.click();
     });
