@@ -12,7 +12,7 @@ import '@polymer/paper-styles/paper-styles.js';
 import './nlg-color-picker.js';
 import './nlg-size-picker.js';
 import { sendEvent } from './analytics';
-import { TEMPLATES, getSkeleton } from './templates.js';
+import { TEMPLATES, getRenderableTemplate } from './templates.js';
 import { renderSVG } from './svg-renderer.js';
 
 window.devicePixelRatio = 1;
@@ -22,7 +22,7 @@ class NLGApp extends LitElement {
     return {
       _size: Object,
       _colors: Array,
-      _template: String,
+      _templateId: String,
       _showAlphaLayer: Boolean,
     };
   }
@@ -36,8 +36,8 @@ class NLGApp extends LitElement {
     this._colors = [];
   }
 
-  _render({ _template, _size, _colors, _showAlphaLayer }) {
-    const content = getSkeleton(_template, _size, _colors);
+  _render({ _templateId, _size, _colors, _showAlphaLayer }) {
+    const content = getRenderableTemplate(_templateId, _size, _colors);
     return html`
       <style>
         :host {
@@ -92,7 +92,7 @@ class NLGApp extends LitElement {
         Show opacity (alpha layer) in the preview
       </paper-checkbox>
   
-      ${this._drawPreview(_template, _size, _colors, _showAlphaLayer, content)}
+      ${this._drawPreview(_size, _colors, _showAlphaLayer, content)}
     `;
   }
 
@@ -103,17 +103,17 @@ class NLGApp extends LitElement {
   }
 
   _drawTemplateOptions() {
-    return Object.keys(TEMPLATES).map(id => html`
-      <paper-item id="${id}">${id}</paper-item>
+    return TEMPLATES.map(template => html`
+      <paper-item id="${template.id}">${template.id}</paper-item>
     `);
   }
 
-  _drawPreview(template, size, colors, showAlphaLayer, content) {
-    if (!this._validateSize(size) || !this._validateColors(template, colors)) {
+  _drawPreview(size, colors, showAlphaLayer, content) {
+    if (!this._validateSize(size) || !this._validateColors(colors)) {
       return;
     }
     return html`
-      <paper-button class="download" raised on-click="${() => this._download(content)}">Download</paper-button>
+      <paper-button class="download" raised on-click="${() => this._onDownloadClick(content)}">Download</paper-button>
       <div class="svg-wrapper-container">
         <div class$="svg-wrapper ${showAlphaLayer ? 'show-alpha' : ''}">${unsafeHTML(content)}</div>
       </div>
@@ -124,18 +124,18 @@ class NLGApp extends LitElement {
     return size && size.width && size.width > 0 && size.height && size.height > 0;
   }
 
-  _validateColor(template, color) {
+  _validateColor(color) {
     return color.fill && !isNaN(color.opacity);
   }
 
-  _validateColors(template, colors) {
-    const hasInvalidColor = colors.find(color => !this._validateColor(template, color));
+  _validateColors(colors) {
+    const hasInvalidColor = colors.find(color => !this._validateColor(color));
     return !hasInvalidColor;
   }
 
   _onTemplateSelected(e) {
-    this._template = e.detail.item.id;
-    const template = TEMPLATES[this._template];
+    this._templateId = e.detail.item.id;
+    const template = TEMPLATES.find(template => template.id === this._templateId);
     this._size = Object.assign({}, template.size);
     this._colors = template.colors.slice();
   }
@@ -155,14 +155,14 @@ class NLGApp extends LitElement {
     this._showAlphaLayer = e.target.checked;
   }
 
-  _download(svg) {
+  _onDownloadClick(svg) {
     renderSVG(svg).then(url => {
       const link = document.createElement('a');
       link.setAttribute('hidden', true);
-      link.download = `${this._template}-${this._size.height}x${this._size.width}`;
+      link.download = `${this._templateId}-${this._size.height}x${this._size.width}`;
       link.href = url;
       sendEvent('download', {
-        'template': this._template,
+        'templateId': this._templateId,
         'height': this._size.height,
         'width': this._size.width,
       });
