@@ -10,6 +10,7 @@ import '@polymer/paper-item/paper-item.js';
 import '@polymer/paper-listbox/paper-listbox.js';
 import '@polymer/paper-styles/paper-styles.js';
 import './nlg-color-picker.js';
+import './nlg-randomizer.js';
 import './nlg-size-picker.js';
 import { sendEvent } from './analytics';
 import { TEMPLATES, getRenderableTemplate } from './templates.js';
@@ -75,6 +76,8 @@ class NLGApp extends LitElement {
           margin: 1em 0;
         }
       </style>
+      
+      <nlg-randomizer on-random-code="${this._onRandomCodeInserted.bind(this)}"></nlg-randomizer>
   
       <paper-dropdown-menu class="template-picker" label="Logo Template"
         on-iron-select="${this._onTemplateSelected.bind(this)}">
@@ -153,6 +156,15 @@ class NLGApp extends LitElement {
 
   _onShowLayerChanged(e) {
     this._showAlphaLayer = e.target.checked;
+  }
+
+  _onRandomCodeInserted() {
+    this._colors = this._colors.map(_color => {
+      const color = Object.assign({}, _color);
+      color.opacity = color.opacity === 0 ? 1 : color.opacity;
+      color.fill = '#'+(Math.random()*0xFFFFFF<<0).toString(16).toUpperCase();
+      return color;
+    });
   }
 
   _onDownloadClick(svg) {
