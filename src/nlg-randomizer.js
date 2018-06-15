@@ -1,4 +1,6 @@
+/* global Shake */
 import { LitElement } from '@polymer/lit-element';
+import 'shake.js/shake';
 
 const up = 'ArrowUp';
 const right = 'ArrowRight';
@@ -19,7 +21,16 @@ class NLGRandomizer extends LitElement {
     super();
     this.konamiCode = [ up, up, down, down, left, right, left, right, b, a ];
     this.currentCode = [];
+    // listen for keydowns on desktop
     document.addEventListener('keydown', this._onKeys.bind(this));
+    // listen for device shaking on mobile
+    const shakeEvent = new Shake({
+      threshold: 15,
+    });
+    shakeEvent.start();
+    window.addEventListener('shake', () => {
+      this._triggerRandomSequence(1);
+    }, false);
   }
 
   _render({ konamiCode }) {
