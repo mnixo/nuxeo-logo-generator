@@ -130,7 +130,7 @@ class NLGApp extends LitElement {
   }
 
   _validateColor(color) {
-    return color.fill && !isNaN(color.opacity);
+    return color.fill && !isNaN(parseFloat(color.opacity));
   }
 
   _validateColors(colors) {

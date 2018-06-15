@@ -49,8 +49,9 @@ class NLGColorPicker extends LitElement {
         }
       </style>
   
-      <paper-dropdown-menu label="${color.label} Color">
-        <paper-listbox id="colorList" slot="dropdown-content" selected="${selected}" on-iron-select="${e => this._onColorSelected(e)}">
+      <paper-dropdown-menu label="${color.label} Color" invalid="${this._isFillInvalid(color)}">
+        <paper-listbox id="colorList" slot="dropdown-content" selected="${selected}"
+        on-iron-select="${e => this._onColorSelected(e)}">
           ${this._drawDefaultColorOptions()}
           <paper-item disabled>
             <iron-icon class="color-preview" icon="help"></iron-icon>
@@ -59,9 +60,15 @@ class NLGColorPicker extends LitElement {
         </paper-listbox>
       </paper-dropdown-menu>
   
-      <paper-input class="fill" label="Fill" value="${color.fill}" on-value-changed="${e => this._onFillChanged(e)}"></paper-input>
+      <paper-input class="fill" label="Fill" value="${color.fill}" 
+        invalid="${this._isFillInvalid(color)}"
+        on-value-changed="${e => this._onFillChanged(e)}">
+      </paper-input>
   
-      <paper-input class="opacity" label="Opacity" value="${color.opacity}" type="Number" max="1" min="0" step="0.1" on-value-changed="${e => this._onOpacityChanged(e)}"></paper-input>
+      <paper-input class="opacity" label="Opacity" value="${color.opacity}" type="Number" max="1" min="0" step="0.1"
+        invalid="${this._isOpacityInvalid(color)}"
+        on-value-changed="${e => this._onOpacityChanged(e)}">
+      </paper-input>
     `;
   }
 
@@ -72,6 +79,14 @@ class NLGColorPicker extends LitElement {
         ${color.id}
       </paper-item>
     `);
+  }
+
+  _isFillInvalid(color) {
+    return !color.fill;
+  }
+
+  _isOpacityInvalid(color) {
+    return isNaN(parseFloat(color.opacity));
   }
 
   _onColorSelected(e) {
