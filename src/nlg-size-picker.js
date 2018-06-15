@@ -27,7 +27,7 @@ class NLGSizePicker extends LitElement {
       </style>
   
       <paper-input id="height" label="Height" value="${size.height}" type="Number" allowed-pattern="[0-9]" min="1"
-        on-value-changed="${e => this._onHeightChanged(e)}" invalid="${size.height < 1}">
+        on-value-changed="${e => this._onHeightChanged(e)}" invalid="${size.height < 1}" always-float-label>
         <span slot="prefix"></span>
         <div slot="suffix">px</div>
       </paper-input>
@@ -35,7 +35,7 @@ class NLGSizePicker extends LitElement {
       <span>x</span>
   
       <paper-input id="width" label="Width" value="${size.width}" type="Number" allowed-pattern="[0-9]" min="1"
-        on-value-changed="${e => this._onWidthChanged(e)}" invalid="${size.width < 1}">
+        on-value-changed="${e => this._onWidthChanged(e)}" invalid="${size.width < 1}" always-float-label>
         <span slot="prefix"></span>
         <div slot="suffix">px</div>
       </paper-input>

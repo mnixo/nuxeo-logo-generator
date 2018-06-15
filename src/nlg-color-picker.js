@@ -49,7 +49,7 @@ class NLGColorPicker extends LitElement {
         }
       </style>
   
-      <paper-dropdown-menu label="${color.label} Color" invalid="${this._isFillInvalid(color)}">
+      <paper-dropdown-menu label="${color.label} Color" invalid="${this._isFillInvalid(color)}" always-float-label>
         <paper-listbox id="colorList" slot="dropdown-content" selected="${selected}"
         on-iron-select="${e => this._onColorSelected(e)}">
           ${this._drawDefaultColorOptions()}
@@ -62,12 +62,12 @@ class NLGColorPicker extends LitElement {
   
       <paper-input class="fill" label="Fill" value="${color.fill}" 
         invalid="${this._isFillInvalid(color)}"
-        on-value-changed="${e => this._onFillChanged(e)}">
+        on-value-changed="${e => this._onFillChanged(e)}" always-float-label>
       </paper-input>
   
       <paper-input class="opacity" label="Opacity" value="${color.opacity}" type="Number" max="1" min="0" step="0.1"
         invalid="${this._isOpacityInvalid(color)}"
-        on-value-changed="${e => this._onOpacityChanged(e)}">
+        on-value-changed="${e => this._onOpacityChanged(e)}" always-float-label>
       </paper-input>
     `;
   }
