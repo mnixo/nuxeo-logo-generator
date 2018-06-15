@@ -13,6 +13,7 @@ import './nlg-color-picker';
 import './nlg-randomizer';
 import './nlg-size-picker';
 import { sendEvent } from './analytics';
+import { COLORS } from './colors';
 import { TEMPLATES, getRenderableTemplate } from './templates';
 import { renderSVG } from './svg-renderer';
 
@@ -159,10 +160,12 @@ class NLGApp extends LitElement {
   }
 
   _onRandomCodeInserted() {
+    const defaultColors = COLORS.slice();
     this._colors = this._colors.map(_color => {
       const color = Object.assign({}, _color);
-      color.opacity = color.opacity === 0 ? 1 : color.opacity;
-      color.fill = '#'+(Math.random()*0xFFFFFF<<0).toString(16).toUpperCase();
+      const defaultColor = defaultColors.splice(Math.floor(Math.random() * defaultColors.length), 1)[0];
+      color.opacity = 1;
+      color.fill = defaultColor.value;
       return color;
     });
   }
