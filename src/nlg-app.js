@@ -1,20 +1,20 @@
 import { LitElement, html } from '@polymer/lit-element';
-import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
-import '@polymer/iron-icon/iron-icon.js';
-import '@polymer/iron-icons/iron-icons.js';
-import '@polymer/paper-button/paper-button.js';
-import '@polymer/paper-checkbox/paper-checkbox.js';
-import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-import '@polymer/paper-input/paper-input.js';
-import '@polymer/paper-item/paper-item.js';
-import '@polymer/paper-listbox/paper-listbox.js';
-import '@polymer/paper-styles/paper-styles.js';
-import './nlg-color-picker.js';
-import './nlg-randomizer.js';
-import './nlg-size-picker.js';
+import { unsafeHTML } from 'lit-html/lib/unsafe-html';
+import '@polymer/iron-icon/iron-icon';
+import '@polymer/iron-icons/iron-icons';
+import '@polymer/paper-button/paper-button';
+import '@polymer/paper-checkbox/paper-checkbox';
+import '@polymer/paper-dropdown-menu/paper-dropdown-menu';
+import '@polymer/paper-input/paper-input';
+import '@polymer/paper-item/paper-item';
+import '@polymer/paper-listbox/paper-listbox';
+import '@polymer/paper-styles/paper-styles';
+import './nlg-color-picker';
+import './nlg-randomizer';
+import './nlg-size-picker';
 import { sendEvent } from './analytics';
-import { TEMPLATES, getRenderableTemplate } from './templates.js';
-import { renderSVG } from './svg-renderer.js';
+import { TEMPLATES, getRenderableTemplate } from './templates';
+import { renderSVG } from './svg-renderer';
 
 window.devicePixelRatio = 1;
 

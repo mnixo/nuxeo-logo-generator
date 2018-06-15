@@ -1,5 +1,5 @@
 import { LitElement, html } from '@polymer/lit-element';
-import { COLORS } from './colors.js';
+import { COLORS } from './colors';
 
 class NLGColorPicker extends LitElement {
   static get properties() {
