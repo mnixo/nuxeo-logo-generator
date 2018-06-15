@@ -36,6 +36,7 @@ class NLGApp extends LitElement {
       height: 0,
     };
     this._colors = [];
+    this._showAlphaLayer = true;
   }
 
   _render({ _templateId, _size, _colors, _showAlphaLayer }) {
