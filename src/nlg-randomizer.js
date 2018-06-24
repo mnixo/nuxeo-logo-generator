@@ -9,6 +9,21 @@ const left = 'ArrowLeft';
 const a = 'KeyA';
 const b = 'KeyB';
 
+/**
+ * Events fired:
+ *
+ * `random-sequence-start`
+ *   Signals the beginning of a random sequence.
+ *   Zero or more `random-sequence-step` events will follow, ending with a single `random-sequence-end` event.
+ *
+ * `random-sequence-step`
+ *   Signals a step of the random sequence.
+ *   Is only fired between a `random-sequence-start` event and a `random-sequence-end` event.
+ *
+ * `random-sequence-end`
+ *   Signals the end of a random sequence.
+ */
+
 class NLGRandomizer extends LitElement {
   static get properties() {
     return {
@@ -33,7 +48,7 @@ class NLGRandomizer extends LitElement {
     }, false);
   }
 
-  _render({ konamiCode }) {
+  _render(props) {
 
   }
 
@@ -42,6 +57,7 @@ class NLGRandomizer extends LitElement {
     // check if the whole code is correct
     if (this.konamiCode.toString() === this.currentCode.toString()) {
       this.currentCode = [];
+      this.dispatchEvent(new CustomEvent('random-sequence-start'));
       this._triggerRandomSequence(1);
       return;
     }
@@ -53,9 +69,11 @@ class NLGRandomizer extends LitElement {
   }
 
   _triggerRandomSequence(interval) {
-    this.dispatchEvent(new CustomEvent('random-code'));
     if (interval < 400) {
+      this.dispatchEvent(new CustomEvent('random-sequence-step'));
       setTimeout(() => this._triggerRandomSequence(interval * 1.2), interval);
+    } else {
+      this.dispatchEvent(new CustomEvent('random-sequence-end'));
     }
   }
 }
