@@ -11,6 +11,7 @@ import '@polymer/paper-listbox/paper-listbox';
 import '@polymer/paper-styles/paper-styles';
 import './nlg-color-picker';
 import './nlg-randomizer';
+import './nlg-router';
 import './nlg-size-picker';
 import { sendEvent } from './analytics';
 import { COLORS } from './colors';
@@ -26,6 +27,7 @@ class NLGApp extends LitElement {
       _colors: Array,
       _templateId: String,
       _showAlphaLayer: Boolean,
+      _updateRouting: Boolean,
     };
   }
 
@@ -37,10 +39,29 @@ class NLGApp extends LitElement {
     };
     this._colors = [];
     this._showAlphaLayer = true;
+    this._updateRouting = true;
+  }
+
+  _firstRendered() {
+    const params = this.shadowRoot.getElementById('router').getQueryParams();
+    if (params.template) {
+      const template = TEMPLATES.find(t => t.id === params.template);
+      if (template) {
+        this._templateId = params.template;
+        this.shadowRoot.getElementById('template-listbox').selected = TEMPLATES.indexOf(template);
+        this._size = params.size;
+        this._colors = params.colors;
+      }
+    } else {
+      this.shadowRoot.getElementById('template-listbox').selected = 0;
+    }
   }
 
   _render({ _templateId, _size, _colors, _showAlphaLayer }) {
     const content = getRenderableTemplate(_templateId, _size, _colors);
+    if (this._updateRouting && _templateId && this._validateSize(_size) && this._validateColors(_colors)) {
+      this.shadowRoot.getElementById('router').setQueryParams(_templateId, this._size, this._colors);
+    }
     return html`
       <style>
         :host {
@@ -79,11 +100,17 @@ class NLGApp extends LitElement {
         }
       </style>
       
-      <nlg-randomizer on-random-code="${this._onRandomCodeInserted.bind(this)}"></nlg-randomizer>
+      <nlg-router id="router"></nlg-router>
+      
+      <nlg-randomizer 
+        on-random-sequence-start="${this._onRandomSequenceStart.bind(this)}"
+        on-random-sequence-step="${this._onRandomSequenceStep.bind(this)}"
+        on-random-sequence-end="${this._onRandomSequenceEnd.bind(this)}">
+      </nlg-randomizer>
   
       <paper-dropdown-menu class="template-picker" label="Logo Template"
         on-iron-select="${this._onTemplateSelected.bind(this)}">
-        <paper-listbox slot="dropdown-content" selected="0">
+        <paper-listbox id="template-listbox" slot="dropdown-content">
           ${this._drawTemplateOptions()}
         </paper-listbox>
       </paper-dropdown-menu>
@@ -139,6 +166,9 @@ class NLGApp extends LitElement {
   }
 
   _onTemplateSelected(e) {
+    if (this._templateId === e.detail.item.id) {
+      return;
+    }
     this._templateId = e.detail.item.id;
     const template = TEMPLATES.find(template => template.id === this._templateId);
     this._size = Object.assign({}, template.size);
@@ -156,19 +186,21 @@ class NLGApp extends LitElement {
     });
   }
 
-  _onShowLayerChanged(e) {
-    this._showAlphaLayer = e.target.checked;
+  _onRandomSequenceStart() {
+    this._updateRouting = false;
   }
 
-  _onRandomCodeInserted() {
-    const defaultColors = COLORS.slice();
-    this._colors = this._colors.map(_color => {
-      const color = Object.assign({}, _color);
-      const defaultColor = defaultColors.splice(Math.floor(Math.random() * defaultColors.length), 1)[0];
-      color.opacity = 1;
-      color.fill = defaultColor.value;
-      return color;
-    });
+  _onRandomSequenceStep() {
+    this._setRandomColors();
+  }
+
+  _onRandomSequenceEnd() {
+    this._setRandomColors();
+    this._updateRouting = true;
+  }
+
+  _onShowLayerChanged(e) {
+    this._showAlphaLayer = e.target.checked;
   }
 
   _onDownloadClick(svg) {
@@ -183,6 +215,17 @@ class NLGApp extends LitElement {
         'width': this._size.width,
       });
       link.click();
+    });
+  }
+
+  _setRandomColors() {
+    const defaultColors = COLORS.slice();
+    this._colors = this._colors.map(_color => {
+      const color = Object.assign({}, _color);
+      const defaultColor = defaultColors.splice(Math.floor(Math.random() * defaultColors.length), 1)[0];
+      color.opacity = 1;
+      color.fill = defaultColor.value;
+      return color;
     });
   }
 }
