@@ -41,6 +41,7 @@
     "@polymer/paper-input": "^3.0.0-pre.18",
     "@polymer/paper-item": "^3.0.0-pre.18",
     "@polymer/paper-listbox": "^3.0.0-pre.18",
+    "@polymer/paper-toast": "^3.0.0-pre.18",
     "shake.js": "^1.2.2",
     "web-animations-js": "^2.3.1"
   }

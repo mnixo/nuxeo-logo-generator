@@ -2,12 +2,14 @@ import { LitElement, html } from '@polymer/lit-element';
 import { unsafeHTML } from 'lit-html/lib/unsafe-html';
 import '@polymer/iron-icon/iron-icon';
 import '@polymer/iron-icons/iron-icons';
+import '@polymer/iron-icons/social-icons';
 import '@polymer/paper-button/paper-button';
 import '@polymer/paper-checkbox/paper-checkbox';
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-item/paper-item';
 import '@polymer/paper-listbox/paper-listbox';
+import '@polymer/paper-toast/paper-toast';
 import '@polymer/paper-styles/paper-styles';
 import './nlg-color-picker';
 import './nlg-randomizer';
@@ -79,9 +81,11 @@ class NLGApp extends LitElement {
         paper-checkbox.show-alpha {
           margin-top: 1em;
         }
-        paper-button.download {
+        paper-button {
           background-color: #fff;
           margin-top: 1em;
+          text-transform: none;
+          width: 8em;
         }
         .svg-wrapper {
           display: flex;
@@ -125,6 +129,8 @@ class NLGApp extends LitElement {
       </paper-checkbox>
   
       ${this._drawPreview(_size, _colors, _showAlphaLayer, content)}
+      
+      <paper-toast id="toastShare">Link copied to clipboard.</paper-toast>
     `;
   }
 
@@ -145,7 +151,16 @@ class NLGApp extends LitElement {
       return;
     }
     return html`
-      <paper-button class="download" raised on-click="${() => this._onDownloadClick(content)}">Download</paper-button>
+      <div>
+        <paper-button raised on-click="${() => this._onDownloadClick(content)}">
+          <iron-icon icon="file-download"></iron-icon>
+          Download
+        </paper-button>
+        <paper-button raised on-click="${() => this._onShareClick()}">
+          <iron-icon icon="social:share"></iron-icon>
+          Share
+        </paper-button>
+      </div>
       <div class="svg-wrapper-container">
         <div class$="svg-wrapper ${showAlphaLayer ? 'show-alpha' : ''}">${unsafeHTML(content)}</div>
       </div>
@@ -216,6 +231,16 @@ class NLGApp extends LitElement {
       });
       link.click();
     });
+  }
+
+  _onShareClick() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+    input.value = window.location.href;
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+    this.shadowRoot.getElementById('toastShare').open();
   }
 
   _setRandomColors() {
