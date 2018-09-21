@@ -4,7 +4,9 @@ import { COLORS } from './colors';
 class NLGColorPicker extends LitElement {
   static get properties() {
     return {
-      color: Object,
+      color: {
+        type: Object,
+      },
     };
   }
 
@@ -18,10 +20,10 @@ class NLGColorPicker extends LitElement {
     };
   }
 
-  _render({ color }) {
+  render() {
     let selected;
-    if (color.fill) {
-      const defaultColor = COLORS.find(defaultColor => defaultColor.value.toLowerCase() === color.fill.toLowerCase());
+    if (this.color.fill) {
+      const defaultColor = COLORS.find(color => color.value.toLowerCase() === this.color.fill.toLowerCase());
       selected = defaultColor ? COLORS.indexOf(defaultColor) : COLORS.length;
     }
     return html`
@@ -48,10 +50,11 @@ class NLGColorPicker extends LitElement {
           text-align: center;
         }
       </style>
-  
-      <paper-dropdown-menu label="${color.label} Color" invalid="${this._isFillInvalid(color)}" always-float-label>
-        <paper-listbox id="colorList" slot="dropdown-content" selected="${selected}"
-        on-iron-select="${e => this._onColorSelected(e)}">
+      
+      <paper-dropdown-menu label="${this.color.label} Color"
+        .invalid="${this._isFillInvalid(this.color)}" always-float-label>
+        <paper-listbox id="colorList" slot="dropdown-content" .selected="${selected}"
+        @iron-select="${e => this._onColorSelected(e)}">
           ${this._drawDefaultColorOptions()}
           <paper-item disabled>
             <iron-icon class="color-preview" icon="help"></iron-icon>
@@ -60,14 +63,14 @@ class NLGColorPicker extends LitElement {
         </paper-listbox>
       </paper-dropdown-menu>
   
-      <paper-input class="fill" label="Fill" value="${color.fill}" 
-        invalid="${this._isFillInvalid(color)}"
-        on-value-changed="${e => this._onFillChanged(e)}" always-float-label>
+      <paper-input class="fill" label="Fill"
+        value="${this.color.fill}" .invalid="${this._isFillInvalid(this.color)}"
+        @value-changed="${e => this._onFillChanged(e)}" always-float-label>
       </paper-input>
   
-      <paper-input class="opacity" label="Opacity" value="${color.opacity}" type="Number" max="1" min="0" step="0.1"
-        invalid="${this._isOpacityInvalid(color)}"
-        on-value-changed="${e => this._onOpacityChanged(e)}" always-float-label>
+      <paper-input class="opacity" label="Opacity" type="Number" max="1" min="0" step="0.1"
+        value="${this.color.opacity}" .invalid="${this._isOpacityInvalid(this.color)}"
+        @value-changed="${e => this._onOpacityChanged(e)}" always-float-label>
       </paper-input>
     `;
   }
@@ -75,7 +78,7 @@ class NLGColorPicker extends LitElement {
   _drawDefaultColorOptions() {
     return COLORS.map(color => html`
       <paper-item>
-        <div class="color-preview" style$="background-color:${color.value}"></div>
+        <div class="color-preview" .style="background-color:${color.value}"></div>
         ${color.id}
       </paper-item>
     `);

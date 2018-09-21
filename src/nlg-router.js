@@ -11,6 +11,9 @@ class NLGRouter extends LitElement {
   }
 
   getQueryParams() {
+    if (!this.shadowRoot.getElementById('app-location')) {
+      return null;
+    }
     const params = this.shadowRoot.getElementById('app-location').queryParams;
     return !params.template ? {} : {
       template: params.template,
@@ -27,10 +30,18 @@ class NLGRouter extends LitElement {
     };
   }
 
-  _render(props) {
+  render() {
     return html`
       <app-location id="app-location"></app-location>
     `;
+  }
+
+  firstUpdated(changedProperties) {
+    this.dispatchEvent(new CustomEvent('initial-route', {
+      detail: {
+        params: this.getQueryParams(),
+      },
+    }));
   }
 }
 window.customElements.define('nlg-router', NLGRouter);

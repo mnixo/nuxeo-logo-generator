@@ -48,7 +48,7 @@ class NLGRandomizer extends LitElement {
     }, false);
   }
 
-  _render(props) {
+  render() {
 
   }
 
