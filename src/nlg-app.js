@@ -116,38 +116,38 @@ class NLGApp extends LitElement {
       <paper-dropdown-menu class="template-picker" label="Logo Template"
         @iron-select="${this._onTemplateSelected.bind(this)}">
         <paper-listbox id="template-listbox" slot="dropdown-content">
-          ${this._drawTemplateOptions()}
+          ${this._renderTemplateOptions()}
         </paper-listbox>
       </paper-dropdown-menu>
   
       <nlg-size-picker .size="${this._size}" @size-changed="${e => this._onSizeChanged(e)}"></nlg-size-picker>
   
-      ${this._drawColorPickers(this._colors)}
+      ${this._renderColorPickers(this._colors)}
   
       <paper-checkbox class="show-alpha" .checked="${this._showAlphaLayer}"
         @change="${this._onShowLayerChanged.bind(this)}">
         Show opacity (alpha layer) in the preview
       </paper-checkbox>
   
-      ${this._drawPreview(this._size, this._colors, this._showAlphaLayer, content)}
+      ${this._renderPreview(this._size, this._colors, this._showAlphaLayer, content)}
       
       <paper-toast id="toastShare">Link copied to clipboard.</paper-toast>
     `;
   }
 
-  _drawColorPickers(colors) {
+  _renderColorPickers(colors) {
     return colors.map(color => html`
       <nlg-color-picker .color="${color}" @color-changed="${this._onColorChanged.bind(this)}"></nlg-color-picker>
     `);
   }
 
-  _drawTemplateOptions() {
+  _renderTemplateOptions() {
     return TEMPLATES.map(template => html`
       <paper-item id="${template.id}">${template.id}</paper-item>
     `);
   }
 
-  _drawPreview(size, colors, showAlphaLayer, content) {
+  _renderPreview(size, colors, showAlphaLayer, content) {
     if (!this._validateSize(size) || !this._validateColors(colors)) {
       return;
     }

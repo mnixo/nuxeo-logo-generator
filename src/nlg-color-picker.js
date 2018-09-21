@@ -55,7 +55,7 @@ class NLGColorPicker extends LitElement {
         .invalid="${this._isFillInvalid(this.color)}" always-float-label>
         <paper-listbox id="colorList" slot="dropdown-content" .selected="${selected}"
         @iron-select="${e => this._onColorSelected(e)}">
-          ${this._drawDefaultColorOptions()}
+          ${this._renderDefaultColorOptions()}
           <paper-item disabled>
             <iron-icon class="color-preview" icon="help"></iron-icon>
             Custom
@@ -75,7 +75,7 @@ class NLGColorPicker extends LitElement {
     `;
   }
 
-  _drawDefaultColorOptions() {
+  _renderDefaultColorOptions() {
     return COLORS.map(color => html`
       <paper-item>
         <div class="color-preview" .style="background-color:${color.value}"></div>
