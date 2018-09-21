@@ -3,7 +3,9 @@ import { LitElement, html } from '@polymer/lit-element';
 class NLGSizePicker extends LitElement {
   static get properties() {
     return {
-      size: Object,
+      size: {
+        type: Object,
+      },
     };
   }
 
@@ -12,7 +14,7 @@ class NLGSizePicker extends LitElement {
     this._setSize(0, 0);
   }
 
-  _render({ size }) {
+  render() {
     return html`
       <style>
         paper-input {
@@ -26,16 +28,16 @@ class NLGSizePicker extends LitElement {
         }
       </style>
   
-      <paper-input id="height" label="Height" value="${size.height}" type="Number" allowed-pattern="[0-9]" min="1"
-        on-value-changed="${e => this._onHeightChanged(e)}" invalid="${size.height < 1}" always-float-label>
+      <paper-input id="height" label="Height" value="${this.size.height}" type="Number" allowed-pattern="[0-9]" min="1"
+        @value-changed="${e => this._onHeightChanged(e)}" .invalid="${this.size.height < 1}" always-float-label>
         <span slot="prefix"></span>
         <div slot="suffix">px</div>
       </paper-input>
   
       <span>x</span>
   
-      <paper-input id="width" label="Width" value="${size.width}" type="Number" allowed-pattern="[0-9]" min="1"
-        on-value-changed="${e => this._onWidthChanged(e)}" invalid="${size.width < 1}" always-float-label>
+      <paper-input id="width" label="Width" value="${this.size.width}" type="Number" allowed-pattern="[0-9]" min="1"
+        @value-changed="${e => this._onWidthChanged(e)}" .invalid="${this.size.width < 1}" always-float-label>
         <span slot="prefix"></span>
         <div slot="suffix">px</div>
       </paper-input>

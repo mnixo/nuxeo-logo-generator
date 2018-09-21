@@ -1,5 +1,5 @@
 import { LitElement, html } from '@polymer/lit-element';
-import { unsafeHTML } from 'lit-html/lib/unsafe-html';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html';
 import '@polymer/iron-icon/iron-icon';
 import '@polymer/iron-icons/iron-icons';
 import '@polymer/iron-icons/social-icons';
@@ -25,11 +25,21 @@ window.devicePixelRatio = 1;
 class NLGApp extends LitElement {
   static get properties() {
     return {
-      _size: Object,
-      _colors: Array,
-      _templateId: String,
-      _showAlphaLayer: Boolean,
-      _updateRouting: Boolean,
+      _size: {
+        type: Object,
+      },
+      _colors: {
+        type: Array,
+      },
+      _templateId: {
+        type: String,
+      },
+      _showAlphaLayer: {
+        type: Boolean,
+      },
+      _updateRouting: {
+        type: Boolean,
+      },
     };
   }
 
@@ -44,25 +54,16 @@ class NLGApp extends LitElement {
     this._updateRouting = true;
   }
 
-  _firstRendered() {
-    const params = this.shadowRoot.getElementById('router').getQueryParams();
-    if (params.template) {
-      const template = TEMPLATES.find(t => t.id === params.template);
-      if (template) {
-        this._templateId = params.template;
-        this.shadowRoot.getElementById('template-listbox').selected = TEMPLATES.indexOf(template);
-        this._size = params.size;
-        this._colors = params.colors;
-      }
-    } else {
-      this.shadowRoot.getElementById('template-listbox').selected = 0;
-    }
+  firstUpdated(changedProperties) {
+    this.shadowRoot.getElementById('template-listbox').selected = 0;
   }
 
-  _render({ _templateId, _size, _colors, _showAlphaLayer }) {
-    const content = getRenderableTemplate(_templateId, _size, _colors);
-    if (this._updateRouting && _templateId && this._validateSize(_size) && this._validateColors(_colors)) {
-      this.shadowRoot.getElementById('router').setQueryParams(_templateId, this._size, this._colors);
+  render() {
+    const hasValidSize = this._validateSize(this._size);
+    const hasValidColors = this._validateColors(this._colors);
+    const content = getRenderableTemplate(this._templateId, this._size, this._colors);
+    if (this._updateRouting && this._templateId && hasValidSize && hasValidColors) {
+      this.shadowRoot.getElementById('router').setQueryParams(this._templateId, this._size, this._colors);
     }
     return html`
       <style>
@@ -104,31 +105,31 @@ class NLGApp extends LitElement {
         }
       </style>
       
-      <nlg-router id="router"></nlg-router>
+      <nlg-router id="router" @initial-route="${this._onInitialRoute.bind(this)}"></nlg-router>
       
       <nlg-randomizer 
-        on-random-sequence-start="${this._onRandomSequenceStart.bind(this)}"
-        on-random-sequence-step="${this._onRandomSequenceStep.bind(this)}"
-        on-random-sequence-end="${this._onRandomSequenceEnd.bind(this)}">
+        @random-sequence-start="${this._onRandomSequenceStart.bind(this)}"
+        @random-sequence-step="${this._onRandomSequenceStep.bind(this)}"
+        @random-sequence-end="${this._onRandomSequenceEnd.bind(this)}">
       </nlg-randomizer>
   
       <paper-dropdown-menu class="template-picker" label="Logo Template"
-        on-iron-select="${this._onTemplateSelected.bind(this)}">
+        @iron-select="${this._onTemplateSelected.bind(this)}">
         <paper-listbox id="template-listbox" slot="dropdown-content">
           ${this._drawTemplateOptions()}
         </paper-listbox>
       </paper-dropdown-menu>
   
-      <nlg-size-picker size="${_size}" on-size-changed="${e => this._onSizeChanged(e)}"></nlg-size-picker>
+      <nlg-size-picker .size="${this._size}" @size-changed="${e => this._onSizeChanged(e)}"></nlg-size-picker>
   
-      ${this._drawColorPickers(_colors)}  
+      ${this._drawColorPickers(this._colors)}
   
-      <paper-checkbox class="show-alpha" checked="${_showAlphaLayer}"
-        on-change="${this._onShowLayerChanged.bind(this)}">
+      <paper-checkbox class="show-alpha" .checked="${this._showAlphaLayer}"
+        @change="${this._onShowLayerChanged.bind(this)}">
         Show opacity (alpha layer) in the preview
       </paper-checkbox>
   
-      ${this._drawPreview(_size, _colors, _showAlphaLayer, content)}
+      ${this._drawPreview(this._size, this._colors, this._showAlphaLayer, content)}
       
       <paper-toast id="toastShare">Link copied to clipboard.</paper-toast>
     `;
@@ -136,7 +137,7 @@ class NLGApp extends LitElement {
 
   _drawColorPickers(colors) {
     return colors.map(color => html`
-      <nlg-color-picker color="${color}" on-color-changed="${this._onColorChanged.bind(this)}"></nlg-color-picker>
+      <nlg-color-picker .color="${color}" @color-changed="${this._onColorChanged.bind(this)}"></nlg-color-picker>
     `);
   }
 
@@ -152,17 +153,17 @@ class NLGApp extends LitElement {
     }
     return html`
       <div>
-        <paper-button raised on-click="${() => this._onDownloadClick(content)}">
+        <paper-button raised @click="${() => this._onDownloadClick(content)}">
           <iron-icon icon="file-download"></iron-icon>
           Download
         </paper-button>
-        <paper-button raised on-click="${() => this._onShareClick()}">
+        <paper-button raised @click="${() => this._onShareClick()}">
           <iron-icon icon="social:share"></iron-icon>
           Share
         </paper-button>
       </div>
       <div class="svg-wrapper-container">
-        <div class$="svg-wrapper ${showAlphaLayer ? 'show-alpha' : ''}">${unsafeHTML(content)}</div>
+        <div class="svg-wrapper ${showAlphaLayer ? 'show-alpha' : ''}">${unsafeHTML(content)}</div>
       </div>
     `;
   }
@@ -199,6 +200,19 @@ class NLGApp extends LitElement {
     this._colors = this._colors.map(color => {
       return color.id === changedColor.id ? changedColor : color;
     });
+  }
+
+  _onInitialRoute(e) {
+    const params = e.detail.params;
+    if (params && params.template) {
+      const template = TEMPLATES.find(t => t.id === params.template);
+      if (template) {
+        this._templateId = params.template;
+        this.shadowRoot.getElementById('template-listbox').selected = TEMPLATES.indexOf(template);
+        this._size = params.size;
+        this._colors = params.colors;
+      }
+    }
   }
 
   _onRandomSequenceStart() {
